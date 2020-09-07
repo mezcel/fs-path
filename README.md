@@ -47,11 +47,21 @@ A Golang file server hosting html5 streaming audio. <img src="https://golang.org
 git clone mezcel@10.42.0.1:~/github/mezcel/fs-path.git ~/github/mezcel/fs-path.git
 ```
 
+### 3.2 AUDIO FILES
+
+#### 3.2.1 Uploading resource:
+
 1. Make a new git branch, on client side, which contains music.
 2. Then git push to the server and then git checkout on the server machine.
 * audio directory: ```~/github/mezcel/fs-path.git/html/audio```
 
-### 3.2 SCP (ssh)
+
+#### 3.2.2 ```.gitignore```
+
+* Review this git repo's ```.gitignore```
+* I set it to ignore all file in the audio directory to prevent audio uploads to Github.
+
+### 3.3 SCP (ssh)
 
 * Manually upload audio
 
