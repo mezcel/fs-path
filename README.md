@@ -21,6 +21,11 @@ A Golang file server hosting html5 streaming audio. <img src="https://golang.org
 ### 2.1 SERVER LOCATION
 
 * Go server Port 8080 was set in the golang script
+
+### 2.2 REMOTE SERVER ( Optional yet preferred )
+
+* The use case for this project is targeted toward playing remotely hosted audio.
+* Go server can be tested locally... but for this use case, it would be redundant compared to just running a media player like VLC.
 * SSH port 22 is set by the server's system admin.
     * Typically it is set as available by default on non-configured systems.
 
