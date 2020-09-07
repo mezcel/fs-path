@@ -1,1 +1,7 @@
+## win10 line endins
+*.bat eol=crlf
+*.ps1 eol=crlf
+
+## Linux/Posix line endins
 *.go eol=lf
+*.sh eol=lf
