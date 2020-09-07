@@ -18,7 +18,9 @@ function AddListItem(trackname, trackpath){
 
 /* Toggle the diplay of the the playlist */
 function TogglePlaylistDisplay() {
-    var x = document.getElementById("playlist");
+    //var x = document.getElementById("playlist");
+    var x = document.getElementById("playlistModal");
+
     if (x.style.display === "none") {
         x.style.display = "block";
     } else {
@@ -39,7 +41,8 @@ function ToggleDarkmode() {
     var body = document.body;
     body.classList.toggle("dark-mode");
 
-    var modalContent = document.getElementById("modalContent");
+    //var modalContent = document.getElementById("modalContent");
+    var modalContent = document.getElementById("playlistModal");
     modalContent.classList.toggle("dark-mode");
 }
 

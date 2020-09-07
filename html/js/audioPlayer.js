@@ -15,7 +15,14 @@ function NextTrack() {
 
 /* Display track name in dom */
 function DisplayCurrentTrackName( objectHTMLAudioElement ) {
-    var linkText = objectHTMLAudioElement.src
+    // file path
+    var linkUrl = objectHTMLAudioElement.src
+    var dirUrl = linkUrl.split("/audio");
+        dirUrl = dirUrl[0] + "/audio";
+    $("#serverUrl").text(dirUrl);
+
+    // basae name
+    var linkText = linkUrl.substring(linkUrl.lastIndexOf('/')+1);
     $("#trackName").text(linkText);
 }
 

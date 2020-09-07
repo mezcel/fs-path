@@ -3,14 +3,32 @@
 #playlist {
     /*display: none;*/
     list-style: none;
+    word-wrap: break-word!important;
 }
 
 #playlist .current-song a{
     /* w3css w3-blue-grey */
-    color:#fff!important;background-color:#607d8b!important
+    color:#fff!important;background-color:#607d8b!important;
+    word-wrap: break-word!important;
 }
 
 .dark-mode {
     background-color: black;
     color: white;
+}
+
+ul { word-wrap: break-word!important; }
+li { word-wrap: break-word!important; }
+code { word-wrap: break-word!important; }
+
+/* Hide scrollbars */
+/*div{ overflow: hidden!important; }*/
+
+/* Overwrite w3css sidebar */
+.w3-sidebar{
+    height:100%;
+    width:100%;
+    /*background-color:#fff;*/
+    position:fixed!important;
+    z-index:1;overflow:auto
 }
