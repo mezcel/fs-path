@@ -14,6 +14,10 @@ A Golang file server hosting html5 streaming audio. <img src="https://golang.org
 
 ### 2.1 SERVER LOCATION
 
+* Go server Port 8080 was set in the golang script
+* SSH port 22 is set by the server's system admin.
+    * Typically it is set as available by default on non-configured systems.
+
 | host | url | ssh |
 | --- | --- | --- |
 | ```ssh -p 22 mezcel@10.42.0.1``` | ```10.42.0.1:8080``` | ```mezcel@10.42.0.1:~/github/mezcel/fs-path.git``` |
@@ -30,6 +34,7 @@ A Golang file server hosting html5 streaming audio. <img src="https://golang.org
 
 ```sh
 ## Clone server repo into client repo
+## In my case, mezcel@10.42.0.1 is a user on a linux ad-hoc server set at 10.42.0.1
 
 git clone mezcel@10.42.0.1:~/github/mezcel/fs-path.git ~/github/mezcel/fs-path.git
 ```
