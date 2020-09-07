@@ -1,0 +1,9 @@
+#playlist {
+    display: none;
+    list-style: none;
+}
+
+#playlist .current-song a{
+    /* w3css w3-blue-grey */
+    color:#fff!important;background-color:#607d8b!important
+}

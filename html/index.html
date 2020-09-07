@@ -1,0 +1,34 @@
+<html>
+
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="author" content="Mezcel, mezcel@hotmail.com">
+        <meta name="description" content="Go Dom Audio Player"/>
+        <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+        <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
+
+        <link rel="stylesheet" href="css/w3.css" />
+        <link rel="stylesheet" href="css/styles.css" />
+
+        <script src="js/jquery-2.2.0.js"></script>
+        <script src="js/myScript.js"> </script>
+        <script src="js/audioPlayer.js"></script> <!--  HTML5 Audio controller -->
+	</head>
+
+	<body>
+        <div class="w3-display-middle w3-padding-small w3-center">
+            <div class="w3-padding-small">
+                <h1 class="w3-card w3-padding-small w3-hover-light-grey" onclick="TogglePlaylistDisplay()" > Multimedia Stream </h1>
+                <hr>
+
+                <audio src="" id="audioPlayer" class="w3-padding-small" controls></audio>
+                <ul id="playlist" class="w3-padding-small"></ul>
+
+            </div>
+        </div>
+
+        <!--  JS playlist -->
+        <script src="js/jsPlaylist.js"></script>
+    </body>
+</html>

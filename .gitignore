@@ -1,0 +1,7 @@
+.vscode
+
+## don't upload music files to github
+html/audio/*
+
+## don't need to upload the playlist updates
+html/js/jsPlaylist.js
