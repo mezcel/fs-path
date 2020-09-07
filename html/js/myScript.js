@@ -1,15 +1,4 @@
-/*var a = document.createElement("a");
-var ulist = document.getElementById("playlist");
-var newItem = document.createElement("li");
-
-a.textContent = "ghost";
-a.setAttribute('href', "audio/ghost.mp3");
-newItem.appendChild(a);
-ulist.appendChild(newItem);*/
-
-// loads the audio player
-//audioPlayer();
-
+/* https://github.com/mezcel/fs-path/html/js/myScript.js */
 
 /* Dynamically adds a list element to the HTML5 Audio Player */
 function AddListItem(trackname, trackpath){
@@ -44,4 +33,39 @@ function NextTrack() {
     var currentSong = randomTrack
 
     return currentSong
+}
+
+function ToggleDarkmode() {
+    var body = document.body;
+    body.classList.toggle("dark-mode");
+
+    var modalContent = document.getElementById("modalContent");
+    modalContent.classList.toggle("dark-mode");
+}
+
+/* DOM keybindings */
+document.onkeyup = function(e) {
+
+    var keyPress = e.which;
+
+    switch(keyPress) {
+
+        case 27: // ESC
+        case 81: // q
+            window.close();
+            break;
+
+        case 16: // shift key
+            // Toggle Light/Dark Color Theme
+            ToggleDarkmode();
+            break;
+
+        case 32:        // spacebar
+            // toggle playlist
+            TogglePlaylistDisplay();
+            break;
+
+        default:
+            console.log("keyPress:",keyPress);
+    }
 }

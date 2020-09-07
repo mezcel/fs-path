@@ -1,9 +1,16 @@
+/* https://github.com/mezcel/fs-path/html/css/styles.js */
+
 #playlist {
-    display: none;
+    /*display: none;*/
     list-style: none;
 }
 
 #playlist .current-song a{
     /* w3css w3-blue-grey */
     color:#fff!important;background-color:#607d8b!important
+}
+
+.dark-mode {
+    background-color: black;
+    color: white;
 }

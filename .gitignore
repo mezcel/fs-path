@@ -2,6 +2,10 @@
 
 ## don't upload music files to github
 html/audio/*
+## allow my default splash sound
+!html/audio/f-s-path0.mp3
+!html/audio/f-s-path1.mp3
+!html/audio/f-s-path2.mp3
 
 ## don't need to upload the playlist updates
 html/js/jsPlaylist.js

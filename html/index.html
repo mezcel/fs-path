@@ -9,7 +9,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
         <link rel="stylesheet" href="css/w3.css" />
-        <link rel="stylesheet" href="css/styles.css" />
+        <link rel="stylesheet" href="css/myStyles.css" />
 
         <script src="js/jquery-2.2.0.js"></script>
         <script src="js/myScript.js"> </script>
@@ -17,16 +17,32 @@
 	</head>
 
 	<body>
-        <div class="w3-display-middle w3-padding-small w3-center">
-            <div class="w3-padding-small">
-                <h1 class="w3-card w3-padding-small w3-hover-light-grey" onclick="TogglePlaylistDisplay()" > Multimedia Stream </h1>
-                <hr>
 
-                <audio src="" id="audioPlayer" class="w3-padding-small" controls></audio>
-                <ul id="playlist" class="w3-padding-small"></ul>
+        <!-- Toggle playlist modal -->
+        <button onclick="document.getElementById('playlistModal').style.display='block'" class="w3-button w3-round">Playlist</button>
 
+        <!-- Playlist modal -->
+        <div id="playlistModal" class="w3-modal">
+            <div id="modalContent" class="w3-modal-content w3-round">
+                <div class="w3-container ">
+                    <span onclick="document.getElementById('playlistModal').style.display='none'" class="w3-button w3-display-topright w3-round w3-pink">&times;</span>
+                    <h4>Server tracks:</h4><hr>
+                    <ul id="playlist"></ul>
+                </div>
             </div>
         </div>
+
+        <!-- Main display with audio player controller -->
+        <div class="w3-display-middle w3-padding-small w3-center">
+            <div class="w3-padding-small">
+                <h1 class="w3-card w3-padding-small w3-round" onclick="TogglePlaylistDisplay()"> fs-path.git </h1>
+                <hr>
+                <p><code id="trackName">track</code></p>
+                <audio src="" id="audioPlayer" class="w3-padding-small" controls></audio>
+            </div>
+        </div>
+
+
 
         <!--  JS playlist -->
         <script src="js/jsPlaylist.js"></script>

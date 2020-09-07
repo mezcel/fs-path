@@ -75,3 +75,24 @@ git clone mezcel@10.42.0.1:~/github/mezcel/fs-path.git ~/github/mezcel/fs-path.g
 ## File
 scp <my-local-file> mezcel@10.42.0.1:~/github/mezcel/fs-path.git/html/audio
 ```
+
+---
+
+## 4.0 Misc
+
+ * Used ( [Watson Text to Speech](https://text-to-speech-demo.ng.bluemix.net/?_ga=2.149277174.1746788865.1577973300-883782623.1576869895&cm_mc_uid=15278110739115689857415&cm_mc_sid_50200000=20950731577973297095&cm_mc_sid_52640000=33641591577973297117) / [IBM](https://www.ibm.com/cloud/watson-text-to-speech?p1=Search&p4=43700051010023756&p5=b&cm_mmc=Search_Google-_-1S_1S-_-WW_NA-_-%2Btext%20%2Bto%20%2Bspeech_b&cm_mmca7=71700000062156796&cm_mmca8=aud-309367918490:kwd-18391235536&cm_mmca9=EAIaIQobChMIvLr8y_rW6wIVAtvACh1XXwtwEAAYASAAEgIQFPD_BwE&cm_mmca10=412803414889&cm_mmca11=b&gclid=EAIaIQobChMIvLr8y_rW6wIVAtvACh1XXwtwEAAYASAAEgIQFPD_BwE&gclsrc=aw.ds) ) to generate my splash/intro track.
+    * American English (en-US): AllisonV3 (female, enhanced dnn)
+
+    ```xml
+    f<p>s<s>path</s></p>
+    ```
+    * American English (en-US): AllisonV3 (female, expressive, transformable)
+
+    ```xml
+    <speak>ef es, <express-as type="GoodNews">path </express-as></speak>
+    ```
+    * American English (en-US): AllisonV3 (female, expressive, dnn)
+
+    ```xml
+    <p><s>eff ess,<prosody rate="-15%"> path.</prosody></s></p>
+    ```

@@ -1,9 +1,13 @@
+/* https://github.com/mezcel/fs-path/index.go */
+
+// A Golang file server hosting html5 streaming audio.
 package main
 
 import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"time"
 
 	"log"
 	"net/http"
@@ -89,12 +93,19 @@ func WriteJsPlaylist(jsPlaylistPath string) {
 		trackPath        string
 	)
 
+	javascriptString = "/*\n\thttps://github.com/mezcel/fs-path/html/js/jsPlaylist.js\n"
+	javascriptString += "\tThis is a Temporary File generated at " + time.Now().String() + "\n"
+	javascriptString += "\tUsed as a playlist importer.\n"
+	javascriptString += "\n\t*/\n\n"
+
+	// load track paths into a js script
 	for i := 1; i < len(textStructs.TrackArray); i++ {
 		trackName = filepath.Base(textStructs.TrackArray[i])
 		trackPath = "audio/" + trackName
 		javascriptString += "AddListItem(\"" + trackName + "\", \"" + trackPath + "\");\n"
 	}
-	javascriptString += "\naudioPlayer();\n\n"
+
+	javascriptString += "\n/* Load the html3 audio playlist */\naudioPlayer();\n\n"
 
 	// Open file using READ & WRITE permission.
 

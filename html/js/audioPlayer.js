@@ -6,19 +6,25 @@
 
 /* Set the next random track on the link list */
 function NextTrack() {
-    var listLength = $("#playlist li a").length - 1
+    var listLength = $("#playlist li a").length
     var randomTrack = Math.floor(Math.random() * listLength);
     var currentSong = randomTrack
 
     return currentSong
 }
 
+/* Display track name in dom */
+function DisplayCurrentTrackName( objectHTMLAudioElement ) {
+    var linkText = objectHTMLAudioElement.src
+    $("#trackName").text(linkText);
+}
 
 /* HTML5 Audio controller */
 function audioPlayer(){
     var currentSong = 0;
 
     $("#audioPlayer")[0].src = $("#playlist li a")[0];
+    DisplayCurrentTrackName( $("#audioPlayer")[0] ); // display track url name in dom
     $("#audioPlayer")[0].play();
 
     $("#playlist li a").click(function(e){
@@ -42,6 +48,7 @@ function audioPlayer(){
         $("#playlist li").removeClass("current-song");
         $("#playlist li:eq("+currentSong+")").addClass("current-song");
         $("#audioPlayer")[0].src = $("#playlist li a")[currentSong].href;
+        DisplayCurrentTrackName( $("#audioPlayer")[0] ); // display track url name in dom
         $("#audioPlayer")[0].play();
     });
 }
