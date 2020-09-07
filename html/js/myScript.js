@@ -6,6 +6,9 @@ function AddListItem(trackname, trackpath){
     var ulist = document.getElementById('playlist');
     var newItem = document.createElement('li');
 
+    trackname = trackname.replace(/%20/g, " ");
+    //trackname = decodeURI(trackname);
+    //trackname = unescape(trackname);
     a.textContent = trackname;
     a.setAttribute('href', trackpath);
     a.classList.add("w3-btn");

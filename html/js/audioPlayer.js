@@ -19,10 +19,16 @@ function DisplayCurrentTrackName( objectHTMLAudioElement ) {
     var linkUrl = objectHTMLAudioElement.src
     var dirUrl = linkUrl.split("/audio");
         dirUrl = dirUrl[0] + "/audio";
+
     $("#serverUrl").text(dirUrl);
 
     // basae name
     var linkText = linkUrl.substring(linkUrl.lastIndexOf('/')+1);
+
+
+    linkText = linkText.replace(/%20/g, " ");
+    //trackname = decodeURI(trackname);
+    //trackname = unescape(trackname);
     $("#trackName").text(linkText);
 }
 
@@ -31,13 +37,14 @@ function audioPlayer(){
     var currentSong = 0;
 
     $("#audioPlayer")[0].src = $("#playlist li a")[0];
-    DisplayCurrentTrackName( $("#audioPlayer")[0] ); // display track url name in dom
     $("#audioPlayer")[0].play();
+    DisplayCurrentTrackName( $("#audioPlayer")[0] ); // display track url name in dom
 
     $("#playlist li a").click(function(e){
        e.preventDefault();
        $("#audioPlayer")[0].src = this;
        $("#audioPlayer")[0].play();
+       DisplayCurrentTrackName( $("#audioPlayer")[0] ); // display track url name in dom
        $("#playlist li").removeClass("current-song");
         currentSong = $(this).parent().index();
         $(this).parent().addClass("current-song");
@@ -55,7 +62,7 @@ function audioPlayer(){
         $("#playlist li").removeClass("current-song");
         $("#playlist li:eq("+currentSong+")").addClass("current-song");
         $("#audioPlayer")[0].src = $("#playlist li a")[currentSong].href;
-        DisplayCurrentTrackName( $("#audioPlayer")[0] ); // display track url name in dom
         $("#audioPlayer")[0].play();
+        DisplayCurrentTrackName( $("#audioPlayer")[0] ); // display track url name in dom
     });
 }

@@ -2,7 +2,7 @@
 
 #playlist {
     /*display: none;*/
-    list-style: none;
+    /*list-style: none;*/
     word-wrap: break-word!important;
 }
 
@@ -17,12 +17,32 @@
     color: white;
 }
 
+.audioSize {
+    height: 45px;
+    width: 280px;
+}
+
+.btnLightdark {
+    font-size: 22px;
+    padding-left: 8px;
+}
+
+.btnTogglePls {
+    /*font-size: 18px;*/
+    padding-right: 10px;
+    padding-top: 8px;
+    /*font-weight: normal;*/
+}
+
+/* wrap everything */
+div { word-wrap: break-word!important; }
 ul { word-wrap: break-word!important; }
+ol { word-wrap: break-word!important; }
 li { word-wrap: break-word!important; }
 code { word-wrap: break-word!important; }
 
 /* Hide scrollbars */
-/*div{ overflow: hidden!important; }*/
+div{ overflow: hidden!important; }
 
 /* Overwrite w3css sidebar */
 .w3-sidebar{
@@ -32,3 +52,15 @@ code { word-wrap: break-word!important; }
     position:fixed!important;
     z-index:1;overflow:auto
 }
+
+/*
+    iPhone5 320x460
+    iPhoneX 414x717
+*/
+/*
+@media (min-device-width: 400px) {
+    body {
+        color: red;
+    }
+}
+*/

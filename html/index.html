@@ -9,8 +9,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
         <title>fs-path</title>
 
-        <!-- <link rel="stylesheet" href="css/w3.css" /> -->
-        <link rel="stylesheet" href="css/w3pro.css" />
+        <link rel="stylesheet" href="css/w3.css" />
         <link rel="stylesheet" href="css/myStyles.css" />
 
         <script src="js/jquery-2.2.0.js"></script>
@@ -20,28 +19,28 @@
 
 	<body>
 
-        <!-- Toggle day/night -->
-        <button onclick="ToggleDarkmode()" class="w3-button w3-round w3-display-topleft">◐</button>
+        <!-- Toggle day/night ◐◯ -->
+        <div onclick="ToggleDarkmode()" class="btnLightdark w3-display-topleft">◐</div>
 
         <!-- Toggle playlist modal -->
-        <button onclick="TogglePlaylistDisplay()" class="w3-button w3-round w3-display-topright">Playlist</button>
+        <div onclick="TogglePlaylistDisplay()" class="btnTogglePls w3-display-topright">Playlist</div>
 
         <!-- Sidebar -->
         <div id="playlistModal" class="w3-sidebar w3-bar-block w3-padding-small" style="display:none">
             <span onclick="document.getElementById('playlistModal').style.display='none'" class="w3-button w3-display-topright w3-round w3-pink">&times;</span>
             <b>Server tracks: </b> <code id="serverUrl">server url</code><hr>
-            <ul id="playlist">
-                <li><a href="audio/f-s-path0.mp3" class="w3-btn w3-round">f-s-path0.mp3</a></li>
-            </ul>
+            <ol id="playlist">
+                <li><a href="audio/f-s-path0.mp3" class="w3-btn w3-round"> (intro) </a></li>
+            </ol>
         </div>
 
-        <!-- Main display with audio player controller -->
-        <div class="w3-display-middle w3-padding-small w3-center">
+        <!-- Main display with title and audio player controller -->
+        <div class="w3-display-middle w3-center">
             <div class="w3-padding-small">
-                <h1 class="w3-card w3-padding-small w3-round" onclick="TogglePlaylistDisplay()"> fs-path.git </h1>
+                <h1 class="w3-card w3-padding-small w3-round" onclick="TogglePlaylistDisplay()">fs-path.git</h1>
                 <hr>
                 <p><code id="trackName">track</code></p>
-                <audio src="" id="audioPlayer" class="w3-padding-small" controls></audio>
+                <audio src="" id="audioPlayer" class="audioSize" controls></audio>
             </div>
         </div>
 

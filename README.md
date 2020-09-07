@@ -4,9 +4,13 @@
 
 A Golang file server hosting html5 streaming audio. <img src="https://golang.org/lib/godoc/images/go-logo-blue.svg" height="16"> <img src="https://www.w3.org/html/logo/badge/html5-badge-h-css3-device-multimedia.png" height="16">
 
+* **My Use Case:**
+    * Just playing and learning Go.
+    * Using this on a custom battery powered pocket sized Linux server to stream to an iOS.
+
 ---
 
-## 2.0 PERSONAL SERVER
+## 2.0 PORTABLE SERVER
 
 * Download: [golang.org](https://golang.org/dl/)
 * Install:
@@ -16,6 +20,7 @@ A Golang file server hosting html5 streaming audio. <img src="https://golang.org
     ## launch web server
     cd ~/github/mezcel/fs-path.git
     go run index.go
+    # go build index.go
     ```
 
 ### 2.1 SERVER LOCATION
@@ -63,6 +68,7 @@ git clone mezcel@10.42.0.1:~/github/mezcel/fs-path.git ~/github/mezcel/fs-path.g
 
 * Review this git repo's ```.gitignore```
 * I set it to ignore all file in the audio directory to prevent audio uploads to Github.
+    * remove the ignore script in production use
 
 ### 3.3 SCP (ssh)
 
@@ -78,21 +84,26 @@ scp <my-local-file> mezcel@10.42.0.1:~/github/mezcel/fs-path.git/html/audio
 
 ---
 
-## 4.0 Misc
+## 4.0 Splash Audio
 
- * Used ( [Watson Text to Speech](https://text-to-speech-demo.ng.bluemix.net/?_ga=2.149277174.1746788865.1577973300-883782623.1576869895&cm_mc_uid=15278110739115689857415&cm_mc_sid_50200000=20950731577973297095&cm_mc_sid_52640000=33641591577973297117) / [IBM](https://www.ibm.com/cloud/watson-text-to-speech?p1=Search&p4=43700051010023756&p5=b&cm_mmc=Search_Google-_-1S_1S-_-WW_NA-_-%2Btext%20%2Bto%20%2Bspeech_b&cm_mmca7=71700000062156796&cm_mmca8=aud-309367918490:kwd-18391235536&cm_mmca9=EAIaIQobChMIvLr8y_rW6wIVAtvACh1XXwtwEAAYASAAEgIQFPD_BwE&cm_mmca10=412803414889&cm_mmca11=b&gclid=EAIaIQobChMIvLr8y_rW6wIVAtvACh1XXwtwEAAYASAAEgIQFPD_BwE&gclsrc=aw.ds) ) to generate my splash/intro track.
-    * American English (en-US): AllisonV3 (female, enhanced dnn)
+* Demo audio and intro sounds were generated using the ( [Watson Text to Speech](https://text-to-speech-demo.ng.bluemix.net/?_ga=2.149277174.1746788865.1577973300-883782623.1576869895&cm_mc_uid=15278110739115689857415&cm_mc_sid_50200000=20950731577973297095&cm_mc_sid_52640000=33641591577973297117) / [IBM](https://www.ibm.com/cloud/watson-text-to-speech?p1=Search&p4=43700051010023756&p5=b&cm_mmc=Search_Google-_-1S_1S-_-WW_NA-_-%2Btext%20%2Bto%20%2Bspeech_b&cm_mmca7=71700000062156796&cm_mmca8=aud-309367918490:kwd-18391235536&cm_mmca9=EAIaIQobChMIvLr8y_rW6wIVAtvACh1XXwtwEAAYASAAEgIQFPD_BwE&cm_mmca10=412803414889&cm_mmca11=b&gclid=EAIaIQobChMIvLr8y_rW6wIVAtvACh1XXwtwEAAYASAAEgIQFPD_BwE&gclsrc=aw.ds) ).
+* Plan on adding in additional effects just for jollies and personalization. Aiming to make the transitions sound more seamless.
 
+### 4.1 Rendering Scripts
+
+* American English (en-US): AllisonV3 (female, enhanced dnn)
     ```xml
     f<p>s<s>path</s></p>
     ```
-    * American English (en-US): AllisonV3 (female, expressive, transformable)
-
+* American English (en-US): AllisonV3 (female, expressive, transformable)
     ```xml
     <speak>ef es, <express-as type="GoodNews">path </express-as></speak>
     ```
-    * American English (en-US): AllisonV3 (female, expressive, dnn)
-
+* American English (en-US): AllisonV3 (female, expressive, dnn)
     ```xml
     <p><s>eff ess,<prosody rate="-15%"> path.</prosody></s></p>
     ```
+
+## 5.0 BLOAT
+
+The UI is way too bloaty for what it is. I am just modifying on the fly, no design practices. Also the re-rendering the WIP audio and images makes the ```.git``` dir large.
