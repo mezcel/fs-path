@@ -11,6 +11,14 @@ A Golang file server hosting html5 streaming audio. <img src="https://golang.org
 * Download: [golang.org](https://golang.org/dl/)
 * Install:
     * ```git clone https://github.com/mezcel/fs-path.git ~/github/mezcel/fs-path.git```
+* Run:
+    ```sh
+    ## launch web server
+
+    cd ~/github/mezcel/fs-path.git
+
+    go run index.go
+    ```
 
 ### 2.1 SERVER LOCATION
 
@@ -39,7 +47,8 @@ A Golang file server hosting html5 streaming audio. <img src="https://golang.org
 git clone mezcel@10.42.0.1:~/github/mezcel/fs-path.git ~/github/mezcel/fs-path.git
 ```
 
-* make a new branch with music, and git git checkout on the server machine \
+1. Make a new git branch, on client side, which contains music.
+2. Then git push to the server and then git checkout on the server machine.
 * audio directory: ```~/github/mezcel/fs-path.git/html/audio```
 
 ### 3.2 SCP (ssh)
