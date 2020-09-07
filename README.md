@@ -14,9 +14,7 @@ A Golang file server hosting html5 streaming audio. <img src="https://golang.org
 * Run:
     ```sh
     ## launch web server
-
     cd ~/github/mezcel/fs-path.git
-
     go run index.go
     ```
 
