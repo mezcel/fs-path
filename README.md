@@ -2,7 +2,7 @@
 
 ## 1.0 ABOUT
 
-A Golang file server hosting html5 streaming audio
+A Golang file server hosting html5 streaming audio. <img src="https://golang.org/lib/godoc/images/go-logo-blue.svg" height="16"> <img src="https://www.w3.org/html/logo/badge/html5-badge-h-css3-device-multimedia.png" height="16">
 
 ---
 
@@ -26,7 +26,7 @@ A Golang file server hosting html5 streaming audio
 
 ### 3.1 GIT
 
-git push the files you want the server to have
+* git push the files you want the server to have
 
 ```sh
 ## Clone server repo into client repo
