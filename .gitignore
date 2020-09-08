@@ -1,11 +1,15 @@
+## Dont need vscode's config files
 .vscode
 
-## don't upload music files to github
+## Don't upload music files to github
 html/audio/*
-## allow my default splash sound
+
+## Allow my default splash sound
 !html/audio/f-s-path0.mp3
+!html/audio/f-s-path0-fx.mp3
 !html/audio/f-s-path1.mp3
 !html/audio/f-s-path2.mp3
 
-## don't need to upload the playlist updates
+## Don't want to upload the playlist updates
 html/js/jsPlaylist.js
+*.m3u

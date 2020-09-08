@@ -2,11 +2,7 @@
 
 ## 1.0 ABOUT
 
-A Golang file server hosting html5 streaming audio. <img src="https://golang.org/lib/godoc/images/go-logo-blue.svg" height="16"> <img src="https://www.w3.org/html/logo/badge/html5-badge-h-css3-device-multimedia.png" height="16">
-
-* **My Use Case:**
-    * Just playing and learning Go.
-    * Using this on a custom battery powered pocket sized Linux server to stream to an iOS.
+A Golang file server hosting streaming audio [M3U]() or Html5 Webpage. <img src="https://golang.org/lib/godoc/images/go-logo-blue.svg" height="16"> <img src="https://www.w3.org/html/logo/badge/html5-badge-h-css3-device-multimedia.png" height="16">
 
 ---
 
@@ -22,19 +18,22 @@ A Golang file server hosting html5 streaming audio. <img src="https://golang.org
     go run index.go
     # go build index.go
     ```
+* Play:
+    | Host Server IP (example) | Streaming Radio Client, like VLC | Web Browser, like Edge |
+    | :---: | :---: | :---: |
+    | ```10.42.0.1``` | ```10.42.0.1:8080/M3U/playlist.m3u``` | ```10.42.0.1:8080``` |
 
 ### 2.1 SERVER LOCATION
 
-* Go server Port 8080 was set in the golang script
+* Go server Port 8080 was set within the Golang script.
 
 ### 2.2 REMOTE SERVER ( Optional yet preferred )
 
 * The use case for this project is targeted toward playing remotely hosted audio.
-* Go server can be tested locally... but for this use case, it would be redundant compared to just running a media player like VLC.
 * SSH port 22 is set by the server's system admin.
     * Typically it is set as available by default on non-configured systems.
 
-| host | url | ssh |
+| host (example) | url (example) | ssh (example) |
 | --- | --- | --- |
 | ```ssh -p 22 mezcel@10.42.0.1``` | ```10.42.0.1:8080``` | ```mezcel@10.42.0.1:~/github/mezcel/fs-path.git``` |
 
@@ -69,6 +68,7 @@ git clone mezcel@10.42.0.1:~/github/mezcel/fs-path.git ~/github/mezcel/fs-path.g
 * Review this git repo's ```.gitignore```
 * I set it to ignore all file in the audio directory to prevent audio uploads to Github.
     * remove the ignore script in production use
+    * Playlist and Audio files will not be uploaded back to Github.com.
 
 ### 3.3 SCP (ssh)
 

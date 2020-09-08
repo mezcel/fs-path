@@ -1,10 +1,12 @@
 /* https://github.com/mezcel/fs-path/index.go */
 
-// A Golang file server hosting html5 streaming audio.
+// About: A Golang file server hosting M3U or Html5 streaming audio.
+// git repo: https://github.com/mezcel/fs-path.git
 package main
 
 import (
 	"fmt"
+	"net"
 	"os"
 	"path/filepath"
 	"time"
@@ -24,16 +26,6 @@ var (
 	textStructs FsStruct
 )
 
-func visit(files *[]string) filepath.WalkFunc {
-	return func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			log.Fatal(err)
-		}
-		*files = append(*files, path)
-		return nil
-	}
-}
-
 // Make an array of the list of items in the audio directory
 func PopulateTrackArray() {
 
@@ -50,19 +42,75 @@ func PopulateTrackArray() {
 
 }
 
-// TTY prompt message regarding file server usage
-func TtyRunPrompt(HostPort string) {
+// Make an M3U playlist
+func GenerateM3UPlaylist(m3uPlaylistPath string) {
 
-	// Server at port
-	fmt.Println("\n\t- Go Server is running the index.go app at,", HostPort)
+	var (
+		m3uString string
+		trackName string
+		trackPath string
+	)
 
-	fmt.Println("\t- Open a web browser and navigate to \"localhost", HostPort, "\"")
-	fmt.Println("\t- Or Open a web browser and navigate to:")
-	fmt.Println("\t-\t\"127.0.0.1", HostPort, "\"")
-	fmt.Println("\t-\t\"10.42.0.1", HostPort, "\"")
-	fmt.Println("\t-\t\"192.168.0.1", HostPort, "\"")
+	// delete file
+	var errDel = os.Remove(m3uPlaylistPath)
+	if errDel != nil {
+		fmt.Println("File does not exist yet. [", m3uPlaylistPath, "]")
+		//return
+	}
 
-	fmt.Println("\n( From within this prompt,\n\tpress Ctrl-C to terminate server hosting. )\n")
+	fmt.Println("File Deleted Successfully. [", m3uPlaylistPath, "]")
+
+	// check if file exists
+	var _, errCreate = os.Stat(m3uPlaylistPath)
+
+	// create file if not exists
+	if os.IsNotExist(errCreate) {
+		var file, errCreate = os.Create(m3uPlaylistPath)
+		if errCreate != nil {
+			fmt.Println("File does not exist yet. [", m3uPlaylistPath, "]")
+			return
+		}
+		defer file.Close()
+	}
+
+	fmt.Println("File Created Successfully. [", m3uPlaylistPath, "]")
+
+	m3uString = "#EXTM3U\n"
+	//m3uString += "#M3U generated at " + time.Now().String() + "\n"
+
+	// load track paths into a js script
+	for i := 1; i < len(textStructs.TrackArray); i++ {
+		trackName = filepath.Base(textStructs.TrackArray[i])
+		trackPath = trackName
+
+		m3uString += "#EXTINF:" + trackName + " \n"
+		m3uString += "../audio/" + trackPath + " \n"
+	}
+
+	// Open file using READ & WRITE permission.
+
+	var file, errWrite = os.OpenFile(m3uPlaylistPath, os.O_RDWR, 0644)
+
+	if errWrite != nil {
+		return
+	}
+
+	defer file.Close()
+
+	// Write some text line-by-line to file.
+	_, errWrite = file.WriteString(m3uString)
+	if errWrite != nil {
+		return
+	}
+
+	// Save file changes.
+	errWrite = file.Sync()
+	if errWrite != nil {
+		fmt.Println("File does not exist yet. [", m3uPlaylistPath, "]")
+		return
+	}
+
+	fmt.Println("File Updated Successfully. [", m3uPlaylistPath, "]")
 
 }
 
@@ -144,10 +192,51 @@ func DeleteJsPlaylist(jsPlaylistPath string) {
 	fmt.Println("File Deleted Successfully. [", jsPlaylistPath, "]")
 }
 
+// TTY prompt message regarding file server usage
+func TtyRunPrompt(HostPort string) {
+
+	var ip net.IP
+
+	ifaces, err := net.Interfaces()
+	// handle err
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for _, i := range ifaces {
+		addrs, err := i.Addrs()
+		// handle err
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		for _, addr := range addrs {
+			//var ip net.IP
+			switch v := addr.(type) {
+			case *net.IPNet:
+				ip = v.IP
+			case *net.IPAddr:
+				ip = v.IP
+			}
+			// process IP address
+		}
+	}
+
+	// Server at port
+	fmt.Println("\nReady to serve.")
+	fmt.Println("\t- Host Port:\t", HostPort)
+	fmt.Println("\t- Web Url:\t", ip, HostPort)
+	fmt.Println("\t- M3U Channel:\t", ip, HostPort, "/M3U/playlist.m3u")
+
+	fmt.Println("\n( From within this prompt,\n\tpress Ctrl-C to terminate server hosting. )")
+	fmt.Println("")
+}
+
 func main() {
 	var (
-		HostPort       string = ":8080"
-		jsPlaylistPath string = "./html/js/jsPlaylist.js"
+		HostPort        string = ":8080"
+		jsPlaylistPath  string = "./html/js/jsPlaylist.js"
+		m3uPlaylistPath string = "./html/M3U/playlist.m3u"
 	)
 
 	// Array of files in the audio directory
@@ -159,6 +248,8 @@ func main() {
 	// Make a new playlist
 	MakeJsPlaylist(jsPlaylistPath)
 	WriteJsPlaylist(jsPlaylistPath)
+
+	GenerateM3UPlaylist(m3uPlaylistPath)
 
 	// Display a TTY prompt message regarding file server usage
 	TtyRunPrompt(HostPort)
