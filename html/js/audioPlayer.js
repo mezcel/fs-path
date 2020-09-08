@@ -1,7 +1,8 @@
 /**
  * Original source code refference (Github):
  *  https://github.com/NelsWebDev/HTML5AudioPlaylist.git
- * My modifications are minor.
+ *
+ * I added some decorative functions and passed some strings arround.
  * */
 
 /* Set the next random track on the link list */

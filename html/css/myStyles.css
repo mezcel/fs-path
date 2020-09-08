@@ -27,13 +27,13 @@
     padding-left: 12px;
     padding-top: 2px;
 }
+.btnLightdark:hover { cursor: context-menu; }
 
 .btnTogglePls {
-    /*font-size: 18px;*/
     padding-right: 10px;
     padding-top: 10px;
-    /*font-weight: normal;*/
 }
+.btnTogglePls:hover { cursor: alias; }
 
 /* wrap everything */
 div { word-wrap: break-word!important; }
@@ -54,10 +54,7 @@ div{ overflow: hidden!important; }
     z-index:1;overflow:auto
 }
 
-/*
-    iPhone5 320x460
-    iPhoneX 414x717
-*/
+/* iPhone5 320x460 iPhoneX 414x717 */
 /*
 @media (min-device-width: 400px) {
     body {

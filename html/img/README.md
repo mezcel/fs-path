@@ -1,1 +1,1 @@
-credits: [musical-note](https://favicon.io/emoji-favicons/musical-note/)
+favicon credits: [musical-note](https://favicon.io/emoji-favicons/musical-note/)

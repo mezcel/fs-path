@@ -2,15 +2,15 @@
 
 ## 1.0 ABOUT
 
-A Golang file server hosting streaming audio [M3U]() or Html5 Webpage. <img src="https://golang.org/lib/godoc/images/go-logo-blue.svg" height="16"> <img src="https://www.w3.org/html/logo/badge/html5-badge-h-css3-device-multimedia.png" height="16">
+A Golang file server hosting streaming audio [M3U](https://wiki.videolan.org/M3U/) or Web Browser. <img src="https://golang.org/lib/godoc/images/go-logo-blue.svg" height="16"> <img src="https://www.w3.org/html/logo/badge/html5-badge-h-css3-device-multimedia.png" height="16"> <img src="https://images.videolan.org/images/VLC-IconSmall.png" height="16">
+
 
 ---
 
 ## 2.0 PORTABLE SERVER
 
 * Download: [golang.org](https://golang.org/dl/)
-* Install:
-    * ```git clone https://github.com/mezcel/fs-path.git ~/github/mezcel/fs-path.git```
+* Install: ```git clone https://github.com/mezcel/fs-path.git ~/github/mezcel/fs-path.git```
 * Run:
     ```sh
     ## launch web server
