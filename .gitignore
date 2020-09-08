@@ -13,3 +13,6 @@ html/audio/*
 ## Don't want to upload the playlist updates
 html/js/jsPlaylist.js
 *.m3u
+
+## Dont need the build executable
+*.exe
