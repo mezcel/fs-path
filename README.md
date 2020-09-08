@@ -16,7 +16,10 @@ A Golang file server hosting streaming audio [M3U](https://wiki.videolan.org/M3U
     ## launch web server
     cd ~/github/mezcel/fs-path.git
     go run index.go
-    # go build index.go
+
+    ## Build options:
+    ## step 1:   # go build index.go     # go build      # go build -o <desired executable destination>/fs-path
+    ## step 2:   # ./index.exe           # ./fs-path     # ./fs-path
     ```
 * Play:
     | Host Server IP (example) | Streaming Radio Client, like VLC | Web Browser, like Edge |

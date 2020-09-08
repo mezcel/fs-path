@@ -9,6 +9,7 @@ function AddListItem(trackname, trackpath){
     trackname = trackname.replace(/%20/g, " ");
     //trackname = decodeURI(trackname);
     //trackname = unescape(trackname);
+
     a.textContent = trackname;
     a.setAttribute('href', trackpath);
     a.classList.add("w3-btn");
@@ -20,24 +21,17 @@ function AddListItem(trackname, trackpath){
 }
 
 /* Toggle the diplay of the the html audio element */
-function ToggleAudioDisplay() {
+function ToggleAudio() {
     //var x = document.getElementById("playlist");
     var audioPlayer = document.getElementById("audioPlayer");
 
-    if (audioPlayer.style.display === "none") {
+    if ( audioPlayer.style.display === "none" ) {
         audioPlayer.style.display = "block";
+        audioPlayer.pause();
     } else {
         audioPlayer.style.display = "none";
-    }
-
-    // Pause when control is displayed, and play again when it is closed
-    if (audioPlayer.duration > 0 && !audioPlayer.paused) {
-        audioPlayer.pause();
-        //sound.currentTime = 0;
-    } else {
         audioPlayer.play();
     }
-
 }
 
 /* Toggle the diplay of the the playlist */
@@ -86,7 +80,7 @@ document.onkeyup = function(e) {
 
         case 80: // p key
             // Toggle Light/Dark Color Theme
-            ToggleAudioDisplay();
+            ToggleAudio();
             break;
 
         case 16: // shift key

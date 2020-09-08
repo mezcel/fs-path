@@ -7,6 +7,11 @@
 
 /* Set the next random track on the link list */
 function NextTrack() {
+    /*currentSong++;
+    if(currentSong == $("#playlist li a").length) {
+        currentSong = 0;
+    }*/
+
     var listLength = $("#playlist li a").length
     var randomTrack = Math.floor(Math.random() * listLength);
     var currentSong = randomTrack
@@ -30,6 +35,8 @@ function DisplayCurrentTrackName( objectHTMLAudioElement ) {
     linkText = linkText.replace(/%20/g, " ");
     //trackname = decodeURI(trackname);
     //trackname = unescape(trackname);
+
+    if ( linkText == "f-s-path0-fx.mp3") { linkText = "(splash sound) 🌊"; } // decorate splash intro track
     $("#trackName").text(linkText);
 }
 
@@ -52,11 +59,6 @@ function audioPlayer(){
     });
 
     $("#audioPlayer")[0].addEventListener("ended", function(){
-
-        /*currentSong++;
-        if(currentSong == $("#playlist li a").length) {
-            currentSong = 0;
-        }*/
 
         currentSong = NextTrack(); // randomizer from myScript.js
 

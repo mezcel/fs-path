@@ -3,6 +3,10 @@
 
 ## Don't upload music files to github
 html/audio/*
+*.mp3
+*.oog
+*.wav
+*.flac
 
 ## Allow my default splash sound
 !html/audio/f-s-path0.mp3
@@ -16,3 +20,5 @@ html/js/jsPlaylist.js
 
 ## Dont need the build executable
 *.exe
+fs-path
+fs-path.exe

@@ -27,21 +27,21 @@
 
         <!-- Sidebar -->
         <div id="playlistModal" class="w3-sidebar w3-bar-block w3-padding-small" style="display:none">
-            <!--<span onclick="TogglePlaylistDisplay()" class="w3-display-topright w3-round">&times;</span>-->
             <div onclick="TogglePlaylistDisplay()" class="btnTogglePls w3-display-topright">Close</div>
             <br><b>Audio Server: </b><br><code id="serverUrl">server url</code><hr>
             <ol id="playlist">
-                <li><a href="audio/f-s-path0-fx.mp3" class="w3-btn w3-round"> (splash sound) 🌊</a></li>
+                <li><a href="audio/f-s-path0-fx.mp3" class="w3-btn w3-round">(splash sound) 🌊</a></li>
             </ol>
         </div>
 
         <!-- Main display with title and audio player controller -->
         <div class="w3-display-middle w3-center">
             <div class="w3-padding-small ">
-                <div class="w3-card w3-padding-small w3-round fsPathLogo" onclick="ToggleAudioDisplay()">fs-path.git</div>
+                <div class="w3-card w3-padding-small w3-round fsPathLogo" onclick="ToggleAudio()">fs-path.git</div>
                 <hr>
                 <p><code id="trackName">track</code></p>
-                <audio src="" id="audioPlayer" style="display:none" class="audioSize" autostart controls></audio>
+                <!--<audio src="" id="audioPlayer" style="display:none" class="audioSize" autostart controls></audio>-->
+                <audio src="" id="audioPlayer" style="display:none" autostart controls></audio>
             </div>
         </div>
 
