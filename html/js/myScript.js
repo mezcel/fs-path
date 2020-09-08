@@ -19,6 +19,27 @@ function AddListItem(trackname, trackpath){
     console.log(newItem.TEXT_NODE);
 }
 
+/* Toggle the diplay of the the html audio element */
+function ToggleAudioDisplay() {
+    //var x = document.getElementById("playlist");
+    var audioPlayer = document.getElementById("audioPlayer");
+
+    if (audioPlayer.style.display === "none") {
+        audioPlayer.style.display = "block";
+    } else {
+        audioPlayer.style.display = "none";
+    }
+
+    // Pause when control is displayed, and play again when it is closed
+    if (audioPlayer.duration > 0 && !audioPlayer.paused) {
+        audioPlayer.pause();
+        //sound.currentTime = 0;
+    } else {
+        audioPlayer.play();
+    }
+
+}
+
 /* Toggle the diplay of the the playlist */
 function TogglePlaylistDisplay() {
     //var x = document.getElementById("playlist");
@@ -29,6 +50,7 @@ function TogglePlaylistDisplay() {
     } else {
         x.style.display = "none";
     }
+
 }
 
 /* Set the next random track on the link list */
@@ -59,6 +81,12 @@ document.onkeyup = function(e) {
         case 27: // ESC
         case 81: // q
             window.close();
+            break;
+
+
+        case 80: // p key
+            // Toggle Light/Dark Color Theme
+            ToggleAudioDisplay();
             break;
 
         case 16: // shift key

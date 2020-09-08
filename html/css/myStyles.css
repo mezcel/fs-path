@@ -17,6 +17,15 @@
     color: white;
 }
 
+.fsPathLogo {
+    width: 300px;
+    font-size:36px;
+    font-family:"Segoe UI",Arial,sans-serif;
+    font-weight:400;
+    margin:10px 0;
+}
+.fsPathLogo:hover { cursor: context-menu; }
+
 .audioSize {
     height: 45px;
     width: 280px;
@@ -33,14 +42,10 @@
     padding-right: 10px;
     padding-top: 10px;
 }
-.btnTogglePls:hover { cursor: alias; }
+.btnTogglePls:hover { cursor: context-menu; }
 
 /* wrap everything */
-div { word-wrap: break-word!important; }
-ul { word-wrap: break-word!important; }
-ol { word-wrap: break-word!important; }
-li { word-wrap: break-word!important; }
-code { word-wrap: break-word!important; }
+div, p, ul, ol, li, code { word-wrap: break-word!important; }
 
 /* Hide scrollbars */
 div{ overflow: hidden!important; }

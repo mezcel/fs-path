@@ -66,4 +66,12 @@ function audioPlayer(){
         $("#audioPlayer")[0].play();
         DisplayCurrentTrackName( $("#audioPlayer")[0] ); // display track url name in dom
     });
+
+    $("#audioPlayer")[0].onplaying = function() {
+        var isPlaying = true;
+    };
+
+    $("#audioPlayer")[0].onpause = function() {
+        var isPlaying = false;
+    };
 }
