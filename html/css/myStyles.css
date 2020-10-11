@@ -8,7 +8,7 @@
 
 #playlist .current-song a{
     /* w3css w3-blue-grey */
-    color:#fff!important;background-color:#607d8b!important;
+    color: #fff!important;background-color:#607d8b!important;
     word-wrap: break-word!important;
 }
 
@@ -18,18 +18,13 @@
 }
 
 .fsPathLogo {
-    width: 300px;
-    font-size:36px;
+    /*width: 300px;*/
+    font-size:32px;
     font-family:"Segoe UI",Arial,sans-serif;
-    font-weight:400;
-    margin:10px 0;
+    /*font-weight:400;*/
+    /*margin:10px 0;*/
 }
 .fsPathLogo:hover { cursor: context-menu; }
-
-.audioSize {
-    height: 45px;
-    width: 280px;
-}
 
 .btnLightdark {
     font-size: 20px;
@@ -59,11 +54,3 @@ div{ overflow: hidden!important; }
     z-index:1;overflow:auto
 }
 
-/* iPhone5 320x460 iPhoneX 414x717 */
-/*
-@media (min-device-width: 400px) {
-    body {
-        color: red;
-    }
-}
-*/

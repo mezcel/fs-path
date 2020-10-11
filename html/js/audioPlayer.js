@@ -33,8 +33,8 @@ function DisplayCurrentTrackName( objectHTMLAudioElement ) {
 
 
     linkText = linkText.replace(/%20/g, " ");
-    //trackname = decodeURI(trackname);
-    //trackname = unescape(trackname);
+    linkText = decodeURI(linkText);
+    linkText = unescape(linkText);
 
     if ( linkText == "f-s-path0-fx.mp3") { linkText = "(splash sound) 🌊"; } // decorate splash intro track
     $("#trackName").text(linkText);

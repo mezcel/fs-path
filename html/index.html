@@ -20,10 +20,10 @@
 	<body>
 
         <!-- Toggle day/night ◐◯ -->
-        <div onclick="ToggleDarkmode()" class="btnLightdark w3-display-topleft">◐</div>
+        <div onclick="ToggleDarkmode()" class="btnLightdark w3-display-topleft w3-hover-text-khaki">◐</div>
 
         <!-- Toggle playlist modal -->
-        <div onclick="TogglePlaylistDisplay()" class="btnTogglePls w3-display-topright">Playlist</div>
+        <div onclick="TogglePlaylistDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-khaki">Playlist</div>
 
         <!-- Sidebar -->
         <div id="playlistModal" class="w3-sidebar w3-bar-block w3-padding-small" style="display:none">
@@ -35,12 +35,11 @@
         </div>
 
         <!-- Main display with title and audio player controller -->
-        <div class="w3-display-middle w3-center">
-            <div class="w3-padding-small ">
-                <div class="w3-card w3-padding-small w3-round fsPathLogo" onclick="ToggleAudio()">fs-path.git</div>
+        <div class="w3-display-middle">
+            <div class="w3-padding-small w3-center">
+                <div class="w3-padding-small fsPathLogo w3-hover-text-cyan" onclick="ToggleAudio()">fs-path.git</div>
                 <hr>
-                <p><code id="trackName">track</code></p>
-                <!--<audio src="" id="audioPlayer" style="display:none" class="audioSize" autostart controls></audio>-->
+                <p><code id="trackName" class="w3-hover-text-green" onclick="ToggleAudio()">track</code></p>
                 <audio src="" id="audioPlayer" style="display:none" autostart controls></audio>
             </div>
         </div>
