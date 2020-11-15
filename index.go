@@ -112,15 +112,15 @@ func GenerateM3UScript() string {
     )
 
     m3uString = "#EXTM3U\n"
-    //m3uString += "#M3U generated at " + time.Now().String() + "\n"
+    m3uString += "#M3U generated at " + time.Now().String() + "\n"
 
     // load track paths into a js script
     for i := 1; i < len(fsStructs.TrackArray); i++ {
         trackName = filepath.Base(fsStructs.TrackArray[i])
         trackPath = trackName
 
-        m3uString += "#EXTINF:0," + trackName + " \n"
-        m3uString += "../audio/" + trackPath + " \n"
+        m3uString += "#EXTINF:0," + trackName + "\n"
+        m3uString += "../audio/" + trackPath + "\n"
     }
 
     return m3uString
