@@ -1,6 +1,6 @@
 <html>
 
-	<head>
+    <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width; initial-scale=1; user-scalable=no" />
         <meta name="author" content="Mezcel, mezcel@hotmail.com">
@@ -15,31 +15,96 @@
         <script src="js/jquery-2.2.0.js"></script>
         <script src="js/myScript.js"> </script>
         <script src="js/audioPlayer.js"></script> <!--  HTML5 Audio controller -->
-	</head>
+    </head>
 
-	<body>
+    <body>
 
         <!-- Toggle day/night ◐◯ -->
-        <div onclick="ToggleDarkmode()" class="btnLightdark w3-display-topleft w3-hover-text-khaki">◐</div>
+        <div onclick="ToggleDarkmode()" class="btnLightdark w3-display-topleft w3-hover-text-orange"><b title="light/dark">◐</b></div>
 
-        <!-- Toggle playlist modal -->
-        <div onclick="TogglePlaylistDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-khaki">Playlist</div>
+        <div  class="w3-display-topright">
+            <!-- Toggle about/help modal 🛈 -->
+            <b class="btnInfo w3-hover-text-orange" onclick="ToggleAboutDisplay()" title="info">🛈</b>
+            <!-- Toggle playlist modal -->
+            <b class="btnPlaylist w3-hover-text-orange" onclick="TogglePlaylistDisplay()" title="playlist">☰</b>
+        </div>
 
-        <!-- Sidebar -->
+        <!-- Playlist Modal -->
         <div id="playlistModal" class="w3-sidebar w3-bar-block w3-padding-small" style="display:none">
-            <div onclick="TogglePlaylistDisplay()" class="btnTogglePls w3-display-topright">Close</div>
-            <br><b>Audio Server: </b><br><code id="serverUrl">server url</code><hr>
+            <div onclick="TogglePlaylistDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="esc">Close</div>
+            <br><b>Audio Server:</b><br><code id="serverUrl">server url</code><hr>
             <ol id="playlist">
                 <li><a href="audio/f-s-path0-fx.mp3" class="w3-btn w3-round">(splash sound) 🌊</a></li>
             </ol>
         </div>
 
+        <!-- About Modal -->
+        <div id="aboutModal" class="w3-sidebar w3-bar-block w3-padding-small" style="display:none">
+            <div onclick="ToggleAboutDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="esc">Close</div>
+            <!-- about -->
+            <h4>About:</h4>
+            A Golang "file server" which hosts streaming audio files.
+            <ul>
+                <li>Audio can be played on a web browser using HTML5 Audio.</li>
+                <li>Audio can be played through a media player, like VLC, through an <a class="m3uUrl w3-hover-text-orange">M3U</a> file.</li>
+            </ul>
+            <p>
+                <b>Controls:</b>
+                <table class="w3-table w3-border">
+                    <tr>
+                        <th>key</th>
+                        <th>function</th>
+                    </tr>
+                    <tr>
+                        <td>esc</td>
+                        <td>default home display</td>
+                    </tr>
+                    <tr>
+                        <td>shift</td>
+                        <td>toggle light/dark mode</td>
+                    </tr>
+                    <tr>
+                        <td>spacebar</td>
+                        <td>toggle playlist display</td>
+                    </tr>
+                    <tr>
+                        <td>p</td>
+                        <td>toggle pause/play display</td>
+                    </tr>
+                    <tr>
+                        <td>i</td>
+                        <td>toggle about/help display</td>
+                    </tr>
+                </table>
+            </p>
+            <p>
+                <b>Instructions:</b>
+                <table class="w3-table w3-border">
+                    <tr>
+                        <th>task</th>
+                        <th>steps</th>
+                    </tr>
+                    <tr>
+                        <td>Upload audio to playlist</td>
+                        <td>Place individual audio tracks into the: "<code>fs-path.git/html/audio/</code>" directory.</td>
+                    </tr>
+                    <tr>
+                        <td>Streaming radio (VLC player playlist)</td>
+                        <td>Open the following url in VLC, or any streaming medial player that accepts <a href="https://wiki.videolan.org/M3U" target="_blank" class="w3-hover-text-orange">M3U</a>  playlists. M3U File: ( <a id="m3uUrl" class="m3uUrl w3-hover-text-orange">M3U Url</a> ) </td>
+                    </tr>
+                </table>
+
+            </p>
+            <hr>
+            <b>Git:</b> <a href="https://github.com/mezcel/fs-path.git" class="w3-hover-text-orange">https://github.com/mezcel/fs-path.git</a>
+        </div>
+
         <!-- Main display with title and audio player controller -->
         <div class="w3-display-middle">
             <div class="w3-padding-small w3-center">
-                <div class="w3-padding-small fsPathLogo w3-hover-text-cyan" onclick="ToggleAudio()">fs-path.git</div>
+                <div class="w3-padding-small fsPathLogo w3-hover-text-cyan" onclick="ToggleAudio()" title="play/pause">fs-path.git</div>
                 <hr>
-                <p><code id="trackName" class="w3-hover-text-green" onclick="ToggleAudio()">track</code></p>
+                <p><code id="trackName" class="w3-hover-text-green" onclick="ToggleAudio()" title="play/pause">track</code></p>
                 <audio src="" id="audioPlayer" style="display:none" autostart controls></audio>
             </div>
         </div>

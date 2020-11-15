@@ -34,11 +34,36 @@ function ToggleAudio() {
     }
 }
 
-/* Toggle the diplay of the the playlist */
+/* Toggle the display of the the playlist */
 function TogglePlaylistDisplay() {
-    //var x = document.getElementById("playlist");
     var x = document.getElementById("playlistModal");
+    var y = document.getElementById("aboutModal");
 
+    // hide about modal
+    if (y.style.display === "block") {
+        y.style.display = "none";
+    }
+
+    // view playlist modal
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+
+}
+
+/* Toggle the display of the the About */
+function ToggleAboutDisplay() {
+    var x = document.getElementById("aboutModal");
+    var y = document.getElementById("playlistModal");
+
+    // hide playlist modal
+    if (y.style.display === "block") {
+        y.style.display = "none";
+    }
+
+    // view about modal
     if (x.style.display === "none") {
         x.style.display = "block";
     } else {
@@ -61,8 +86,24 @@ function ToggleDarkmode() {
     body.classList.toggle("dark-mode");
 
     //var modalContent = document.getElementById("modalContent");
-    var modalContent = document.getElementById("playlistModal");
-    modalContent.classList.toggle("dark-mode");
+    var modalContent1 = document.getElementById("playlistModal");
+    modalContent1.classList.toggle("dark-mode");
+
+    var modalContent2 = document.getElementById("aboutModal");
+    modalContent2.classList.toggle("dark-mode");
+}
+
+function HideModals() {
+    var x = document.getElementById("aboutModal");
+    var y = document.getElementById("playlistModal");
+
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    }
+
+    if (y.style.display === "block") {
+        y.style.display = "none";
+    }
 }
 
 /* DOM keybindings */
@@ -73,10 +114,14 @@ document.onkeyup = function(e) {
     switch(keyPress) {
 
         case 27: // ESC
-        case 81: // q
-            window.close();
+            // hide about and playlist if visible
+            HideModals();
             break;
 
+        case 81: // q
+            document.getElementById("audioPlayer").pause();
+            window.close();
+            break;
 
         case 80: // p key
             // Toggle Light/Dark Color Theme
@@ -88,9 +133,14 @@ document.onkeyup = function(e) {
             ToggleDarkmode();
             break;
 
-        case 32:        // spacebar
+        case 32: // spacebar
             // toggle playlist
             TogglePlaylistDisplay();
+            break;
+
+        case 73: // i
+            // toggle about/info
+            ToggleAboutDisplay();
             break;
 
         default:

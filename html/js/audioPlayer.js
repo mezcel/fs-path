@@ -22,11 +22,15 @@ function NextTrack() {
 /* Display track name in dom */
 function DisplayCurrentTrackName( objectHTMLAudioElement ) {
     // file path
-    var linkUrl = objectHTMLAudioElement.src
+    var linkUrl = objectHTMLAudioElement.src;
     var dirUrl = linkUrl.split("/audio");
-        dirUrl = dirUrl[0] + "/audio";
 
-    $("#serverUrl").text(dirUrl);
+    var audioUrl = dirUrl[0] + "/audio";
+    $("#serverUrl").text(audioUrl);
+
+    var streamUrl = dirUrl[0] + "/M3U/playlist.m3u"
+    $("#m3uUrl").text(streamUrl);
+    $(".m3uUrl").attr("href", streamUrl);
 
     // basae name
     var linkText = linkUrl.substring(linkUrl.lastIndexOf('/')+1);

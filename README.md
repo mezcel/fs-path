@@ -2,8 +2,7 @@
 
 ## 1.0 ABOUT
 
-A Golang file server hosting streaming audio [M3U](https://wiki.videolan.org/M3U/) or Web Browser. <img src="https://golang.org/lib/godoc/images/go-logo-blue.svg" height="16"> <img src="https://www.w3.org/html/logo/badge/html5-badge-h-css3-device-multimedia.png" height="16"> <img src="https://images.videolan.org/images/VLC-IconSmall.png" height="16">
-
+A Golang file server hosting streaming audio. ( [M3U](https://wiki.videolan.org/M3U/) or Web Browser ) <img src="https://golang.org/lib/godoc/images/go-logo-blue.svg" height="16"> <img src="https://www.w3.org/html/logo/badge/html5-badge-h-css3-device-multimedia.png" height="16"> <img src="https://images.videolan.org/images/VLC-IconSmall.png" height="16">
 
 ---
 
@@ -105,8 +104,3 @@ scp <my-local-file> mezcel@10.42.0.1:~/github/mezcel/fs-path.git/html/audio
 * American English (en-US): AllisonV3 (female, expressive, dnn)
     ```xml
     <p><s>eff ess,<prosody rate="-15%"> path.</prosody></s></p>
-    ```
-
-## 5.0 BLOAT
-
-The UI is way too bloaty for what it is. I am just modifying on the fly, no design practices. Also the re-rendering the WIP audio and images makes the ```.git``` dir large.
