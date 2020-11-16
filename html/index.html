@@ -20,18 +20,18 @@
     <body>
 
         <!-- Toggle day/night ◐◯ -->
-        <div onclick="ToggleDarkmode()" class="btnLightdark w3-display-topleft w3-hover-text-orange"><b title="light/dark">◐</b></div>
+        <div onclick="ToggleDarkmode()" class="btnLightdark w3-display-topleft w3-hover-text-orange"><b title="(shift) light/dark">◐</b></div>
 
         <div  class="w3-display-topright">
             <!-- Toggle about/help modal 🛈 -->
-            <b class="btnInfo w3-hover-text-orange" onclick="ToggleAboutDisplay()" title="info">🛈</b>
+            <b class="btnInfo w3-hover-text-orange" onclick="ToggleAboutDisplay()" title="(i) info">🛈</b>
             <!-- Toggle playlist modal -->
-            <b class="btnPlaylist w3-hover-text-orange" onclick="TogglePlaylistDisplay()" title="playlist">☰</b>
+            <b class="btnPlaylist w3-hover-text-orange" onclick="TogglePlaylistDisplay()" title="(spacebar) playlist">☰</b>
         </div>
 
         <!-- Playlist Modal -->
         <div id="playlistModal" class="w3-sidebar w3-bar-block w3-padding-small" style="display:none">
-            <div onclick="TogglePlaylistDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="esc">Close</div>
+            <div onclick="TogglePlaylistDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
             <br><b>Audio Server:</b><br><code id="serverUrl">server url</code><hr>
             <ol id="playlist">
                 <li><a href="audio/f-s-path0-fx.mp3" class="w3-btn w3-round">(splash sound) 🌊</a></li>
@@ -40,7 +40,7 @@
 
         <!-- About Modal -->
         <div id="aboutModal" class="w3-sidebar w3-bar-block w3-padding-small" style="display:none">
-            <div onclick="ToggleAboutDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="esc">Close</div>
+            <div onclick="ToggleAboutDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
             <!-- about -->
             <h4>About:</h4>
             A Golang "file server" which hosts streaming audio files.
@@ -102,9 +102,9 @@
         <!-- Main display with title and audio player controller -->
         <div class="w3-display-middle">
             <div class="w3-padding-small w3-center">
-                <div class="w3-padding-small fsPathLogo w3-hover-text-cyan" onclick="ToggleAudio()" title="play/pause">fs-path.git</div>
+                <div class="w3-padding-small fsPathLogo w3-hover-text-cyan" onclick="ToggleAudio()" title="(p) play/pause">fs-path.git</div>
                 <hr>
-                <p><code id="trackName" class="w3-hover-text-green" onclick="ToggleAudio()" title="play/pause">track</code></p>
+                <p><code id="trackName" class="w3-hover-text-green" onclick="ToggleAudio()" title="(p) play/pause">track</code></p>
                 <audio src="" id="audioPlayer" style="display:none" autostart controls></audio>
             </div>
         </div>
