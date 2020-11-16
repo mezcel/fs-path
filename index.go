@@ -29,7 +29,6 @@ var (
 
 // Make an array of the list of items in the audio directory
 func PopulateFilesArray() {
-
     trackDirectory := "html/audio"
     err := filepath.Walk(trackDirectory, func(path string, info os.FileInfo, err error) error {
         fsStructs.TrackArray = append(fsStructs.TrackArray, path)
@@ -39,13 +38,11 @@ func PopulateFilesArray() {
         panic(err)
     }
 
-    fmt.Println("\nTracks loaded. Track count:", len(fsStructs.TrackArray))
-
+    fmt.Println("\n Tracks loaded. Track count:", len(fsStructs.TrackArray))
 }
 
 // Make place holder file. It will be populated with a JS script which will make a HTML5 Audio playlist
 func MakeTextFile(textfilePath string) {
-
     // check if file exists
     var _, err = os.Stat(textfilePath)
 
@@ -58,19 +55,18 @@ func MakeTextFile(textfilePath string) {
         defer file.Close()
     }
 
-    fmt.Println("\tFile Created Successfully. [", textfilePath, "]")
+    //fmt.Println("\tFile Created Successfully.")
 }
 
 // Delete the JS HTML5 Audio playlist script. Used prior to writing a new playlist.
 func DeleteTextFile(textfilePath string) {
-
     // delete file
     var err = os.Remove(textfilePath)
     if err != nil {
         return
     }
 
-    fmt.Println("\tFile Deleted Successfully. [", textfilePath, "]")
+    //fmt.Println("\tFile Deleted Successfully.")
 }
 
 // Generate JS script which will make a HTML5 Audio playlist
@@ -157,7 +153,7 @@ func WriteJsPlaylist(jsPlaylistPath string) {
         return
     }
 
-    fmt.Println("\tFile Updated Successfully. [", jsPlaylistPath, "]")
+    fmt.Println("\tFile Updated Successfully.",)
 }
 
 // Make an M3U playlist file
@@ -190,67 +186,88 @@ func WriteM3UPlaylist(m3uPlaylistPath string) {
         return
     }
 
-    fmt.Println("\tFile Updated Successfully. [", m3uPlaylistPath, "]")
+    fmt.Println("\tFile Updated Successfully.")
 
 }
 
-// TTY prompt message regarding file server usage
-func TtyRunPrompt(HostPort string) {
-
-    var ip net.IP
-
-    ifaces, err := net.Interfaces()
+// GetLocalIP returns the non loopback local IP of the host
+func GetLocalIP() string {
+    addrs, err := net.InterfaceAddrs()
     if err != nil {
-        fmt.Println(err)
+        return ""
     }
-
-    for _, i := range ifaces {
-        addrs, err := i.Addrs()
-        if err != nil {
-            fmt.Println(err)
-        }
-
-        for _, addr := range addrs {
-            //var ip net.IP
-            switch v := addr.(type) {
-            case *net.IPNet:
-                ip = v.IP
-            case *net.IPAddr:
-                ip = v.IP
+    for _, address := range addrs {
+        // check the address type and if it is not a loopback the display it
+        if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+            if ipnet.IP.To4() != nil {
+                return ipnet.IP.String()
             }
         }
     }
-
-    // Server at port
-    fmt.Println("\nReady to serve.")
-    fmt.Println("\t- Host Port:\t", HostPort)
-    fmt.Println("\t- Web Url:\t", ip, HostPort)
-    fmt.Println("\t- M3U Channel:\t", ip, HostPort, "/M3U/playlist.m3u")
-
-    fmt.Println("\n( From within this prompt,\n\tpress Ctrl-C to terminate server hosting. )")
-    fmt.Println("")
+    return ""
 }
 
+// Tty About and instructions splash greeter
+func TtyGreeter(ParentDirectory string, Ip string, HostPort string) {
+
+    var (
+        hostUrl string = "http://" + Ip + HostPort
+        m3uUrl string = hostUrl + "/M3U/playlist.m3u"
+        audioDirectory string = ParentDirectory + "/html/audio"
+    )
+
+    fmt.Println("## ############################################################################")
+    fmt.Println("## fs-path\n##")
+    fmt.Println("## About:")
+    fmt.Println("##\tHost streaming audio on a Golang file server. ( M3U or HTML5 Audio )\n##")
+    fmt.Println("## Instructions:\n##")
+    fmt.Println("##    * Play Option 1: (Web Page)", )
+    fmt.Println("##       Launch a web browser and enter the following URL.")
+    fmt.Println("##        >", hostUrl, "\n##")
+    fmt.Println("##    * Play Option 2: (Net Radio)", )
+    fmt.Println("##       Launch a media player, like VLC, and run the M3U file.")
+    fmt.Println("##        >", m3uUrl, "\n##")
+    fmt.Println("##    * (Upload) audio to server playlist", )
+    fmt.Println("##       Place individual music into the following server directory.")
+    fmt.Println("##        >", audioDirectory)
+    fmt.Println("## ############################################################################")
+}
+
+// Main()
 func main() {
     var (
-        HostPort        string = ":8080"
-        jsPlaylistPath  string = "./html/js/jsPlaylist.js"
-        m3uPlaylistPath string = "./html/M3U/playlist.m3u"
+        Ip               string
+        HostPort         string = ":8080"
+        JsPlaylistPath   string = "/html/js/jsPlaylist.js"
+        M3uPlaylistPath  string = "/html/M3U/playlist.m3u"
     )
+
+    // Get working directory path
+    WorkingDirectory, err := os.Getwd()
+
+    if err != nil {
+        panic(err)
+    }
+
+    Ip = GetLocalIP()
+    JsPlaylistPath = WorkingDirectory + JsPlaylistPath
+    M3uPlaylistPath = WorkingDirectory + M3uPlaylistPath
+
+    // Display a TTY prompt message regarding file server usage
+    TtyGreeter(WorkingDirectory, Ip, HostPort)
 
     // Array of files in the audio directory
     PopulateFilesArray()
 
-    fmt.Println("\nGenerating:", jsPlaylistPath)
+    fmt.Println("\n Generating:", JsPlaylistPath)
     // Write a js script to dynamically add track to the html audio ol list
-    WriteJsPlaylist(jsPlaylistPath)
+    WriteJsPlaylist(JsPlaylistPath)
 
-    fmt.Println("\nGenerating:", m3uPlaylistPath)
+    fmt.Println("\n Generating:", M3uPlaylistPath)
     // Generate a standalone W3M streaming audio player file
-    WriteM3UPlaylist(m3uPlaylistPath)
+    WriteM3UPlaylist(M3uPlaylistPath)
 
-    // Display a TTY prompt message regarding file server usage
-    TtyRunPrompt(HostPort)
+    fmt.Println(" ---\n ( Pres \"Ctrl+c\" to terminate server )\n")
 
     // File Server
     fs := http.FileServer(http.Dir("./html"))

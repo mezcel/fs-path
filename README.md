@@ -2,7 +2,7 @@
 
 ## 1.0 ABOUT
 
-A Golang file server hosting streaming audio. ( [M3U](https://wiki.videolan.org/M3U/) or Web Browser ) <img src="https://golang.org/lib/godoc/images/go-logo-blue.svg" height="16"> <img src="https://www.w3.org/html/logo/badge/html5-badge-h-css3-device-multimedia.png" height="16"> <img src="https://images.videolan.org/images/VLC-IconSmall.png" height="16">
+Host streaming audio on a Golang file server. ( [M3U](https://wiki.videolan.org/M3U/) or Web Browser ) <img src="https://golang.org/lib/godoc/images/go-logo-blue.svg" height="16"> <img src="https://www.w3.org/html/logo/badge/html5-badge-h-css3-device-multimedia.png" height="16"> <img src="https://images.videolan.org/images/VLC-IconSmall.png" height="16">
 
 ---
 

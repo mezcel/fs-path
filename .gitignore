@@ -8,17 +8,17 @@ html/audio/*
 *.wav
 *.flac
 
-## Allow my default splash sound
+## Do Allow my default splash sound sample audio
 !html/audio/f-s-path0.mp3
 !html/audio/f-s-path0-fx.mp3
 !html/audio/f-s-path1.mp3
 !html/audio/f-s-path2.mp3
 
-## Don't want to upload the playlist updates
+## Don't upload playlists to github
 html/js/jsPlaylist.js
 *.m3u
 
-## Dont need the build executable
+## Don't upload build executables to github
 *.exe
 fs-path
 fs-path.exe
