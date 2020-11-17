@@ -97,7 +97,7 @@ func GenerateJSScript() string {
 }
 
 // Generate M3U script listing file paths in the audio directory
-func GenerateM3UScript() string {
+func GenerateM3UScript(Ip string, HostPort string) string {
 
     var (
         m3uString string
@@ -108,7 +108,6 @@ func GenerateM3UScript() string {
     )
 
     m3uString = "#EXTM3U\n"
-    m3uString += "#M3U generated at " + time.Now().String() + "\n"
 
     // load track paths into a js script
     for i := 1; i < len(fsStructs.TrackArray); i++ {
@@ -116,8 +115,10 @@ func GenerateM3UScript() string {
         trackPath = trackName
 
         m3uString += "#EXTINF:0," + trackName + "\n"
-        m3uString += "../audio/" + trackPath + "\n"
+        m3uString += "http://" + Ip + HostPort + "/audio/" + trackPath + "\n"
     }
+
+    m3uString += "\n#M3U generated at: " + time.Now().String()
 
     return m3uString
 }
@@ -157,13 +158,13 @@ func WriteJsPlaylist(jsPlaylistPath string) {
 }
 
 // Make an M3U playlist file
-func WriteM3UPlaylist(m3uPlaylistPath string) {
+func WriteM3UPlaylist(m3uPlaylistPath string, Ip string, HostPort string) {
 
-    var m3uString string = GenerateM3UScript()
+    var m3uString string = GenerateM3UScript(Ip, HostPort)
 
     DeleteTextFile(m3uPlaylistPath)
     MakeTextFile(m3uPlaylistPath)
-    m3uString = GenerateM3UScript()
+    //m3uString = GenerateM3UScript(Ip)
 
     // Open file using READ & WRITE permission.
     var file, errWrite = os.OpenFile(m3uPlaylistPath, os.O_RDWR, 0644)
@@ -265,7 +266,7 @@ func main() {
 
     fmt.Println("\n Generating:", M3uPlaylistPath)
     // Generate a standalone W3M streaming audio player file
-    WriteM3UPlaylist(M3uPlaylistPath)
+    WriteM3UPlaylist(M3uPlaylistPath, Ip, HostPort)
 
     fmt.Println(" ---\n ( Pres \"Ctrl+c\" to terminate server )\n")
 
