@@ -193,6 +193,8 @@ func WriteM3UPlaylist(m3uPlaylistPath string, Ip string, HostPort string) {
 
 // GetLocalIP returns the non loopback local IP of the host
 func GetLocalIP() string {
+    var returnIp string = "127.0.0.1" // localhost
+
     addrs, err := net.InterfaceAddrs()
 
     if err != nil {
@@ -203,14 +205,13 @@ func GetLocalIP() string {
         // check the address type and if it is not a loopback the display it
         if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
             if ipnet.IP.To4() != nil {
-                return ipnet.IP.String()
+                returnIp = ipnet.IP.String()
+                return returnIp
             }
-        } else {
-            return "127.0.0.1"
         }
     }
 
-    return ""
+    return returnIp
 }
 
 // Tty About and instructions splash greeter

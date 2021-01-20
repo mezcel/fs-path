@@ -22,7 +22,6 @@ function AddListItem(trackname, trackpath){
 
 /* Toggle the diplay of the the html audio element */
 function ToggleAudio() {
-    //var x = document.getElementById("playlist");
     var audioPlayer = document.getElementById("audioPlayer");
 
     if ( audioPlayer.style.display === "none" ) {
@@ -85,7 +84,6 @@ function ToggleDarkmode() {
     var body = document.body;
     body.classList.toggle("dark-mode");
 
-    //var modalContent = document.getElementById("modalContent");
     var modalContent1 = document.getElementById("playlistModal");
     modalContent1.classList.toggle("dark-mode");
 

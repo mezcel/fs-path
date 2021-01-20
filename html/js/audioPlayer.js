@@ -24,8 +24,15 @@ function DisplayCurrentTrackName( objectHTMLAudioElement ) {
     // file path
     var linkUrl = objectHTMLAudioElement.src;
     var dirUrl = linkUrl.split("/audio");
+    var urlIp = linkUrl.split(":");
+        urlIp = urlIp[1];
+        urlIp = urlIp.split("//");
+        urlIp = urlIp[1];
 
     var audioUrl = dirUrl[0] + "/audio";
+
+    $("#urlIp").text(urlIp);
+
     $("#serverUrl").text(audioUrl);
 
     var streamUrl = dirUrl[0] + "/M3U/playlist.m3u"
