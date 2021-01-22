@@ -3,6 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width; initial-scale=1; user-scalable=no" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <meta name="author" content="Mezcel, mezcel@hotmail.com">
         <meta name="description" content="Go Dom Audio Player"/>
         <link rel="icon" type="image/x-icon" href="html/img/favicon.ico">
@@ -47,13 +48,16 @@
             <div onclick="ToggleAboutDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
             <!-- about -->
             <h4>About:</h4>
-            A Golang "file server" which hosts streaming audio files.
-            <ul>
-                <li>Audio can be played on a web browser using HTML5 Audio.</li>
-                <li>Audio can be played through a media player, like VLC, through an <a class="m3uUrl w3-hover-text-orange">M3U</a> file.</li>
-            </ul>
-            <p>
-                <b>Controls:</b>
+            <div class="w3-card w3-padding">
+                A Golang <b>file server</b> which hosts <b>streaming audio</b> files.
+                <ul>
+                    <li>HTML5 Audio</li>
+                    <li>Streaming media media player <a class="m3uUrl w3-hover-text-orange">M3U</a> file.</li>
+                </ul>
+            </div>
+
+            <h4>Controls:</h4>
+            <p class="w3-padding">
                 <table class="w3-table w3-border">
                     <tr>
                         <th>key</th>
@@ -79,25 +83,15 @@
                         <td>i</td>
                         <td>toggle about/help display</td>
                     </tr>
+                    <tr>
+                        <td>u</td>
+                        <td>Toggle upload modal</td>
+                    </tr>
                 </table>
             </p>
-            <p>
-                <b>Instructions:</b>
-                <table class="w3-table w3-border">
-                    <tr>
-                        <th>task</th>
-                        <th>steps</th>
-                    </tr>
-                    <tr>
-                        <td>Upload audio to playlist</td>
-                        <td>Place individual audio tracks into the: "<code>fs-path.git/html/audio/</code>" directory.</td>
-                    </tr>
-                    <tr>
-                        <td>Streaming radio (VLC player playlist)</td>
-                        <td>Open the following url in VLC, or any streaming medial player that accepts <a href="https://wiki.videolan.org/M3U" target="_blank" class="w3-hover-text-orange">M3U</a>  playlists. M3U File: ( <a id="m3uUrl" class="m3uUrl w3-hover-text-orange">M3U Url</a> ) </td>
-                    </tr>
-                </table>
-
+            <p class="w3-card w3-padding">
+                <b>Streaming Radio:</b>
+                Use the following url in a streaming medial player. <a id="m3uUrl" class="m3uUrl w3-hover-text-orange">M3U Url</a>
             </p>
             <hr>
             <b>Git:</b> <a href="https://github.com/mezcel/fs-path.git" class="w3-hover-text-orange">https://github.com/mezcel/fs-path.git</a>
@@ -107,16 +101,20 @@
         <div id="uploadModal" class="w3-sidebar w3-bar-block w3-padding-small" style="display:none">
             <div onclick="ToggleUploadDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
             <!-- about -->
-            <h4>Upload:</h4>
+            <h4>Upload Tracks:</h4>
             Upload individual audio files into the audio audio server playlist.
             <p>
-                <b>Upload tracks:</b>
                 <div class="w3-container w3-card">
-                    <br>
-                    <form id="myForm" class="w3-border" enctype="multipart/form-data" action="http://localhost:8080/html/audio" method="post">
-                        <input type="file" name="myFile" />
-                        <input type="submit" value="upload" />
-                    </form>
+                    <h5>GUI Upload:</h5>
+                    <div class="w3-border w3-container" >
+                        <br>
+                        <form id="myForm" enctype="multipart/form-data" action="http://localhost:8080/html/audio" method="post">
+                            <input type="file" name="myFile" />
+                            <input type="submit" value="upload" />
+                        </form>
+                        Expect a momentary delay upon upload.
+                    </div>
+                    <h5>TTY Upload:</h5>
                     <table class="w3-table w3-border">
                         <tr>
                             <th>task</th>
@@ -125,6 +123,10 @@
                         <tr>
                             <td>SSH Upload</td>
                             <td><code><b>scp</b> <u>myAudioFile.mp3</u> <b>mezcel@<span id="urlIp">127.0.0.1</span></b>:<u>~/github/mezcel/fs-path.git/audio/</u> </code></td>
+                        </tr>
+                        <tr>
+                            <td>Example remote server path</td>
+                            <td><code>~/github/mezcel/fs-path.git/audio/</td>
                         </tr>
                     </table>
                     <br>

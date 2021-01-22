@@ -19,17 +19,25 @@ import (
 // I did not need to make structs, but I felt this could come in handy if I need to scale the project later
 // Multipurpose Struct used in this file server
 type FsStruct struct {
-	TrackArray   []string
-	TrackPlaying string
+	// Array for the track names in the /html/audio directory
+	TrackArray       []string
+	Ip               string
+	HostPort         string
+	WorkingDirectory string
+	JsPlaylistPath   string
+	M3uPlaylistPath  string
 }
 
-// Global Struct Vars
+/* Global variables */
 var (
 	fsStructs FsStruct
 )
 
 // Make an array of the list of items in the audio directory
 func PopulateFilesArray() {
+	// Nill any existing track array values
+	fsStructs.TrackArray = nil
+
 	trackDirectory := "html/audio"
 	err := filepath.Walk(trackDirectory, func(path string, info os.FileInfo, err error) error {
 		fsStructs.TrackArray = append(fsStructs.TrackArray, path)
@@ -216,16 +224,23 @@ func GetLocalIP() string {
 }
 
 // Tty About and instructions splash greeter
-func TtyGreeter(ParentDirectory string, Ip string, HostPort string) {
+func TtyGreeter(WorkingDirectory string, Ip string, HostPort string) {
 
 	var (
 		hostUrl        string = "http://" + Ip + HostPort
 		m3uUrl         string = hostUrl + "/M3U/playlist.m3u"
-		audioDirectory string = ParentDirectory + "/html/audio"
+		audioDirectory string = WorkingDirectory + "/html/audio"
 	)
+
+	hostname, err := os.Hostname()
+	if err != nil {
+		panic(err)
+	}
 
 	fmt.Println("## ############################################################################")
 	fmt.Println("## fs-path\n##")
+	fmt.Println("## Host Server:", hostname)
+	fmt.Println("## ")
 	fmt.Println("## About:")
 	fmt.Println("##\tHost streaming audio on a Golang file server. ( M3U or HTML5 Audio )\n##")
 	fmt.Println("## Instructions:\n##")
@@ -241,12 +256,10 @@ func TtyGreeter(ParentDirectory string, Ip string, HostPort string) {
 	fmt.Println("## ############################################################################")
 }
 
-/*func renderError(w http.ResponseWriter, message string, statusCode int) {
-	w.WriteHeader(http.StatusBadRequest)
-	w.Write([]byte(message))
-}*/
-
+// Upload client file to goserver
 func UploadFile(w http.ResponseWriter, r *http.Request) {
+	var tempFilename string
+
 	fmt.Println("File Upload Endpoint Hit")
 
 	// Parse our multipart form, 10 << 20 specifies a maximum
@@ -263,13 +276,15 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer file.Close()
-	fmt.Printf("Uploaded File: %+v\n", handler.Filename)
-	fmt.Printf("File Size: %+v\n", handler.Size)
-	fmt.Printf("MIME Header: %+v\n", handler.Header)
+	fmt.Printf("Uploaded File:\t%+v\n", handler.Filename)
+	fmt.Printf("File Size:\t\t%+v\n", handler.Size)
+	fmt.Printf("MIME Header:\t%+v\n", handler.Header)
 
 	// Create a temporary file within our temp-images directory that follows
 	// a particular naming pattern
-	tempFile, err := ioutil.TempFile("html/audio", handler.Filename)
+
+	tempFilename = handler.Filename + "_"
+	tempFile, err := ioutil.TempFile("html/audio", tempFilename)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -282,27 +297,20 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	/*detectedFileType := http.DetectContentType(fileBytes)
-	switch detectedFileType {
-	case "audio/mpeg":
-	case "audio/wav":
-		break
-	default:
-		renderError(w, "INVALID_FILE_TYPE\nGo back and use a *.mp3 or *.wav file.", http.StatusBadRequest)
-		return
-	}*/
-
 	// write this byte array to our temporary file
 	tempFile.Write(fileBytes)
-	// return that we have successfully uploaded our file!
-	fmt.Fprintf(w, "Successfully Uploaded File\n")
-	fmt.Fprintf(w, "Navigate back\n")
 
-	WriteJsPlaylist(JsPlaylistPath)
-	WriteM3UPlaylist(M3uPlaylistPath, Ip, HostPort)
+	// return that we have successfully uploaded our file!
+	fmt.Fprintf(w, "Successfully Uploaded File\n\n")
+	fmt.Fprintf(w, "Navigate back and refresh to ensure DOM reads the server update.\n")
+
+	PopulateFilesArray()
+	WriteJsPlaylist(fsStructs.JsPlaylistPath)
+	WriteM3UPlaylist(fsStructs.M3uPlaylistPath, fsStructs.Ip, fsStructs.HostPort)
 	fmt.Println("Update M3U and JS Playlist\n")
 }
 
+/* Serve local file path in goserver */
 func ServeFiles(w http.ResponseWriter, r *http.Request) {
 	p := "." + r.URL.Path
 	if p == "./" {
@@ -312,17 +320,8 @@ func ServeFiles(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, p)
 }
 
-var (
-	// Global path vars
-	Ip              string
-	HostPort        string = ":8080"
-	JsPlaylistPath  string = "/html/js/jsPlaylist.js"
-	M3uPlaylistPath string = "/html/M3U/playlist.m3u"
-)
-
-// Main()
-func main() {
-
+// Initialize the server resource path strings
+func InitializeServerPath() {
 	// Get working directory path
 	WorkingDirectory, err := os.Getwd()
 
@@ -330,23 +329,32 @@ func main() {
 		panic(err)
 	}
 
-	Ip = GetLocalIP()
-	JsPlaylistPath = WorkingDirectory + JsPlaylistPath
-	M3uPlaylistPath = WorkingDirectory + M3uPlaylistPath
+	// Update file paths
+	fsStructs.HostPort = ":8080"
+	fsStructs.Ip = GetLocalIP()
+	fsStructs.WorkingDirectory = WorkingDirectory
+	fsStructs.JsPlaylistPath = WorkingDirectory + "/html/js/jsPlaylist.js"
+	fsStructs.M3uPlaylistPath = WorkingDirectory + "/html/M3U/playlist.m3u"
+}
+
+// Main()
+func main() {
+	// Initialize the server resource path strings
+	InitializeServerPath()
 
 	// Display a TTY prompt message regarding file server usage
-	TtyGreeter(WorkingDirectory, Ip, HostPort)
+	TtyGreeter(fsStructs.WorkingDirectory, fsStructs.Ip, fsStructs.HostPort)
 
 	// Array of files in the audio directory
 	PopulateFilesArray()
 
-	fmt.Println("\n Generating:", JsPlaylistPath)
+	fmt.Println("\n Generating:", fsStructs.JsPlaylistPath)
 	// Write a js script to dynamically add track to the html audio ol list
-	WriteJsPlaylist(JsPlaylistPath)
+	WriteJsPlaylist(fsStructs.JsPlaylistPath)
 
-	fmt.Println("\n Generating:", M3uPlaylistPath)
+	fmt.Println("\n Generating:", fsStructs.M3uPlaylistPath)
 	// Generate a standalone W3M streaming audio player file
-	WriteM3UPlaylist(M3uPlaylistPath, Ip, HostPort)
+	WriteM3UPlaylist(fsStructs.M3uPlaylistPath, fsStructs.Ip, fsStructs.HostPort)
 
 	fmt.Println(" ---\n ( Pres \"Ctrl+c\" to terminate server )\n")
 
@@ -358,5 +366,5 @@ func main() {
 
 	// Host streaming audio service
 	//log.Fatal(http.ListenAndServe(HostPort, fs))
-	log.Fatal(http.ListenAndServe(HostPort, nil))
+	log.Fatal(http.ListenAndServe(fsStructs.HostPort, nil))
 }

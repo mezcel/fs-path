@@ -92,6 +92,7 @@ function NextTrack() {
     return currentSong
 }
 
+/* toggle light/dark mode */
 function ToggleDarkmode() {
     var body = document.body;
     body.classList.toggle("dark-mode");
@@ -101,14 +102,14 @@ function ToggleDarkmode() {
 
     var modalContent2 = document.getElementById("aboutModal");
     modalContent2.classList.toggle("dark-mode");
+
+    var modalContent3 = document.getElementById("uploadModal");
+    modalContent3.classList.toggle("dark-mode");
 }
 
+/* update the form's action's ip url */
 function FormArctionUrl(homeUrl) {
     document.getElementById("myForm").action = homeUrl + "html/audio";
-}
-
-function NavigateHome(homeUrl) {
-    document.getElementById("myForm").action = homeUrl;
 }
 
 /* Toggle upload modal */
@@ -140,6 +141,7 @@ function ToggleUploadDisplay() {
 
 }
 
+/* Hide all modals */
 function HideModals() {
     var x = document.getElementById("aboutModal");
     var y = document.getElementById("playlistModal");
@@ -176,7 +178,7 @@ document.onkeyup = function(e) {
             break;
 
         case 80: // p key
-            // Toggle Light/Dark Color Theme
+            // Toggle pause and track progress display
             ToggleAudio();
             break;
 
