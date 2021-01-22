@@ -124,7 +124,7 @@ func GenerateM3UScript(Ip string, HostPort string) string {
 		trackPath = trackName
 
 		m3uString += "#EXTINF:0," + trackName + "\n"
-		m3uString += "http://" + Ip + HostPort + "html/audio/" + trackPath + "\n"
+		m3uString += "http://" + Ip + HostPort + "/html/audio/" + trackPath + "\n"
 	}
 
 	m3uString += "\n#M3U generated at: " + time.Now().String()
