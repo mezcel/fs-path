@@ -5,280 +5,358 @@
 package main
 
 import (
-    "fmt"
-    "net"
-    "os"
-    "path/filepath"
-    "time"
+	"fmt"
+	"io/ioutil"
+	"net"
+	"os"
+	"path/filepath"
+	"time"
 
-    "log"
-    "net/http"
+	"log"
+	"net/http"
 )
 
 // I did not need to make structs, but I felt this could come in handy if I need to scale the project later
 // Multipurpose Struct used in this file server
 type FsStruct struct {
-    TrackArray   []string
-    TrackPlaying string
+	TrackArray   []string
+	TrackPlaying string
 }
 
 // Global Struct Vars
 var (
-    fsStructs FsStruct
+	fsStructs FsStruct
 )
 
 // Make an array of the list of items in the audio directory
 func PopulateFilesArray() {
-    trackDirectory := "html/audio"
-    err := filepath.Walk(trackDirectory, func(path string, info os.FileInfo, err error) error {
-        fsStructs.TrackArray = append(fsStructs.TrackArray, path)
-        return nil
-    })
-    if err != nil {
-        panic(err)
-    }
+	trackDirectory := "html/audio"
+	err := filepath.Walk(trackDirectory, func(path string, info os.FileInfo, err error) error {
+		fsStructs.TrackArray = append(fsStructs.TrackArray, path)
+		return nil
+	})
+	if err != nil {
+		panic(err)
+	}
 
-    fmt.Println("\n Tracks loaded. Track count:", len(fsStructs.TrackArray))
+	fmt.Println("\n Tracks loaded. Track count:", len(fsStructs.TrackArray))
 }
 
 // Make place holder file. It will be populated with a JS script which will make a HTML5 Audio playlist
 func MakeTextFile(textfilePath string) {
-    // check if file exists
-    var _, err = os.Stat(textfilePath)
+	// check if file exists
+	var _, err = os.Stat(textfilePath)
 
-    // create file if not exists
-    if os.IsNotExist(err) {
-        var file, err = os.Create(textfilePath)
-        if err != nil {
-            return
-        }
-        defer file.Close()
-    }
+	// create file if not exists
+	if os.IsNotExist(err) {
+		var file, err = os.Create(textfilePath)
+		if err != nil {
+			return
+		}
+		defer file.Close()
+	}
 
-    //fmt.Println("\tFile Created Successfully.")
+	//fmt.Println("\tFile Created Successfully.")
 }
 
 // Delete the JS HTML5 Audio playlist script. Used prior to writing a new playlist.
 func DeleteTextFile(textfilePath string) {
-    // delete file
-    var err = os.Remove(textfilePath)
-    if err != nil {
-        return
-    }
+	// delete file
+	var err = os.Remove(textfilePath)
+	if err != nil {
+		return
+	}
 
-    //fmt.Println("\tFile Deleted Successfully.")
+	//fmt.Println("\tFile Deleted Successfully.")
 }
 
 // Generate JS script which will make a HTML5 Audio playlist
 func GenerateJSScript() string {
-    var (
-        javascriptString string
-        trackName        string
-        trackPath        string
+	var (
+		javascriptString string
+		trackName        string
+		trackPath        string
 
-        // fsStructs.TrackArray was a global struct var
-    )
+		// fsStructs.TrackArray was a global struct var
+	)
 
-    javascriptString = "/*\n\thttps://github.com/mezcel/fs-path/html/js/jsPlaylist.js\n"
-    javascriptString += "\tThis is a Temporary File generated at " + time.Now().String() + "\n"
-    javascriptString += "\tUsed as a playlist importer.\n"
-    javascriptString += "\n\t*/\n\n"
+	javascriptString = "/*\n\thttps://github.com/mezcel/fs-path/html/js/jsPlaylist.js\n"
+	javascriptString += "\tThis is a Temporary File generated at " + time.Now().String() + "\n"
+	javascriptString += "\tUsed as a playlist importer.\n"
+	javascriptString += "\n\t*/\n\n"
 
-    // load track paths into a js script
-    for i := 1; i < len(fsStructs.TrackArray); i++ {
-        trackName = filepath.Base(fsStructs.TrackArray[i])
-        trackPath = "audio/" + trackName
-        javascriptString += "AddListItem(\"" + trackName + "\", \"" + trackPath + "\");\n"
-    }
+	// load track paths into a js script
+	for i := 1; i < len(fsStructs.TrackArray); i++ {
+		trackName = filepath.Base(fsStructs.TrackArray[i])
+		trackPath = "html/audio/" + trackName
+		javascriptString += "AddListItem(\"" + trackName + "\", \"" + trackPath + "\");\n"
+	}
 
-    javascriptString += "\n/* Load the html3 audio playlist */\naudioPlayer();\n\n"
+	javascriptString += "\n/* Load the html3 audio playlist */\naudioPlayer();\n\n"
 
-    return javascriptString
+	return javascriptString
 }
 
 // Generate M3U script listing file paths in the audio directory
 func GenerateM3UScript(Ip string, HostPort string) string {
 
-    var (
-        m3uString string
-        trackName string
-        trackPath string
+	var (
+		m3uString string
+		trackName string
+		trackPath string
 
-        // fsStructs.TrackArray was a global struct var
-    )
+		// fsStructs.TrackArray was a global struct var
+	)
 
-    m3uString = "#EXTM3U\n"
+	m3uString = "#EXTM3U\n"
 
-    // load track paths into a js script
-    for i := 1; i < len(fsStructs.TrackArray); i++ {
-        trackName = filepath.Base(fsStructs.TrackArray[i])
-        trackPath = trackName
+	// load track paths into a js script
+	for i := 1; i < len(fsStructs.TrackArray); i++ {
+		trackName = filepath.Base(fsStructs.TrackArray[i])
+		trackPath = trackName
 
-        m3uString += "#EXTINF:0," + trackName + "\n"
-        m3uString += "http://" + Ip + HostPort + "/audio/" + trackPath + "\n"
-    }
+		m3uString += "#EXTINF:0," + trackName + "\n"
+		m3uString += "http://" + Ip + HostPort + "html/audio/" + trackPath + "\n"
+	}
 
-    m3uString += "\n#M3U generated at: " + time.Now().String()
+	m3uString += "\n#M3U generated at: " + time.Now().String()
 
-    return m3uString
+	return m3uString
 }
 
 // Make a JS script file
 func WriteJsPlaylist(jsPlaylistPath string) {
 
-    var javascriptString string
+	var javascriptString string
 
-    DeleteTextFile(jsPlaylistPath)
-    MakeTextFile(jsPlaylistPath)
+	DeleteTextFile(jsPlaylistPath)
+	MakeTextFile(jsPlaylistPath)
 
-    javascriptString = GenerateJSScript()
+	javascriptString = GenerateJSScript()
 
-    // Open file using READ & WRITE permission.
+	// Open file using READ & WRITE permission.
 
-    var file, err = os.OpenFile(jsPlaylistPath, os.O_RDWR, 0644)
-    if err != nil {
-        return
-    }
+	var file, err = os.OpenFile(jsPlaylistPath, os.O_RDWR, 0644)
+	if err != nil {
+		return
+	}
 
-    defer file.Close()
+	defer file.Close()
 
-    // Write some text line-by-line to file.
-    _, err = file.WriteString(javascriptString)
-    if err != nil {
-        return
-    }
+	// Write some text line-by-line to file.
+	_, err = file.WriteString(javascriptString)
+	if err != nil {
+		return
+	}
 
-    // Save file changes.
-    err = file.Sync()
-    if err != nil {
-        return
-    }
+	// Save file changes.
+	err = file.Sync()
+	if err != nil {
+		return
+	}
 
-    fmt.Println("\tFile Updated Successfully.",)
+	fmt.Println("\tFile Updated Successfully.")
 }
 
 // Make an M3U playlist file
 func WriteM3UPlaylist(m3uPlaylistPath string, Ip string, HostPort string) {
 
-    var m3uString string = GenerateM3UScript(Ip, HostPort)
+	var m3uString string = GenerateM3UScript(Ip, HostPort)
 
-    DeleteTextFile(m3uPlaylistPath)
-    MakeTextFile(m3uPlaylistPath)
-    //m3uString = GenerateM3UScript(Ip)
+	DeleteTextFile(m3uPlaylistPath)
+	MakeTextFile(m3uPlaylistPath)
+	//m3uString = GenerateM3UScript(Ip)
 
-    // Open file using READ & WRITE permission.
-    var file, errWrite = os.OpenFile(m3uPlaylistPath, os.O_RDWR, 0644)
-    if errWrite != nil {
-        return
-    }
+	// Open file using READ & WRITE permission.
+	var file, errWrite = os.OpenFile(m3uPlaylistPath, os.O_RDWR, 0644)
+	if errWrite != nil {
+		return
+	}
 
-    defer file.Close()
+	defer file.Close()
 
-    // Write some text line-by-line to file.
-    _, errWrite = file.WriteString(m3uString)
-    if errWrite != nil {
-        return
-    }
+	// Write some text line-by-line to file.
+	_, errWrite = file.WriteString(m3uString)
+	if errWrite != nil {
+		return
+	}
 
-    // Save file changes.
-    errWrite = file.Sync()
-    if errWrite != nil {
-        fmt.Println("\tFile does not exist yet. [", m3uPlaylistPath, "]")
-        return
-    }
+	// Save file changes.
+	errWrite = file.Sync()
+	if errWrite != nil {
+		fmt.Println("\tFile does not exist yet. [", m3uPlaylistPath, "]")
+		return
+	}
 
-    fmt.Println("\tFile Updated Successfully.")
+	fmt.Println("\tFile Updated Successfully.")
 
 }
 
 // GetLocalIP returns the non loopback local IP of the host
 func GetLocalIP() string {
-    var returnIp string = "127.0.0.1" // localhost
+	var returnIp string = "127.0.0.1" // localhost
 
-    addrs, err := net.InterfaceAddrs()
+	addrs, err := net.InterfaceAddrs()
 
-    if err != nil {
-        return ""
-    }
+	if err != nil {
+		return ""
+	}
 
-    for _, address := range addrs {
-        // check the address type and if it is not a loopback the display it
-        if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
-            if ipnet.IP.To4() != nil {
-                returnIp = ipnet.IP.String()
-                return returnIp
-            }
-        }
-    }
+	for _, address := range addrs {
+		// check the address type and if it is not a loopback the display it
+		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+			if ipnet.IP.To4() != nil {
+				returnIp = ipnet.IP.String()
+				return returnIp
+			}
+		}
+	}
 
-    return returnIp
+	return returnIp
 }
 
 // Tty About and instructions splash greeter
 func TtyGreeter(ParentDirectory string, Ip string, HostPort string) {
 
-    var (
-        hostUrl string = "http://" + Ip + HostPort
-        m3uUrl string = hostUrl + "/M3U/playlist.m3u"
-        audioDirectory string = ParentDirectory + "/html/audio"
-    )
+	var (
+		hostUrl        string = "http://" + Ip + HostPort
+		m3uUrl         string = hostUrl + "/M3U/playlist.m3u"
+		audioDirectory string = ParentDirectory + "/html/audio"
+	)
 
-    fmt.Println("## ############################################################################")
-    fmt.Println("## fs-path\n##")
-    fmt.Println("## About:")
-    fmt.Println("##\tHost streaming audio on a Golang file server. ( M3U or HTML5 Audio )\n##")
-    fmt.Println("## Instructions:\n##")
-    fmt.Println("##    * Play Option 1: (Web Page)", )
-    fmt.Println("##       Launch a web browser and enter the following URL.")
-    fmt.Println("##        >", hostUrl, "\n##")
-    fmt.Println("##    * Play Option 2: (Net Radio)", )
-    fmt.Println("##       Launch a media player, like VLC, and run the M3U file.")
-    fmt.Println("##        >", m3uUrl, "\n##")
-    fmt.Println("##    * (Upload) audio to server playlist", )
-    fmt.Println("##       Place individual music into the following server directory.")
-    fmt.Println("##        >", audioDirectory)
-    fmt.Println("## ############################################################################")
+	fmt.Println("## ############################################################################")
+	fmt.Println("## fs-path\n##")
+	fmt.Println("## About:")
+	fmt.Println("##\tHost streaming audio on a Golang file server. ( M3U or HTML5 Audio )\n##")
+	fmt.Println("## Instructions:\n##")
+	fmt.Println("##    * Play Option 1: (Web Page)")
+	fmt.Println("##       Launch a web browser and enter the following URL.")
+	fmt.Println("##        >", hostUrl, "\n##")
+	fmt.Println("##    * Play Option 2: (Net Radio)")
+	fmt.Println("##       Launch a media player, like VLC, and run the M3U file.")
+	fmt.Println("##        >", m3uUrl, "\n##")
+	fmt.Println("##    * (Upload) audio to server playlist")
+	fmt.Println("##       Place individual music into the following server directory.")
+	fmt.Println("##        >", audioDirectory)
+	fmt.Println("## ############################################################################")
 }
+
+/*func renderError(w http.ResponseWriter, message string, statusCode int) {
+	w.WriteHeader(http.StatusBadRequest)
+	w.Write([]byte(message))
+}*/
+
+func UploadFile(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("File Upload Endpoint Hit")
+
+	// Parse our multipart form, 10 << 20 specifies a maximum
+	// upload of 10 MB files.
+	r.ParseMultipartForm(10 << 20)
+	// FormFile returns the first file for the given key `myFile`
+	// it also returns the FileHeader so we can get the Filename,
+	// the Header and the size of the file
+	file, handler, err := r.FormFile("myFile")
+	if err != nil {
+		fmt.Println("Error Retrieving the File")
+		fmt.Fprintf(w, "Error Retrieving the File")
+		fmt.Println(err)
+		return
+	}
+	defer file.Close()
+	fmt.Printf("Uploaded File: %+v\n", handler.Filename)
+	fmt.Printf("File Size: %+v\n", handler.Size)
+	fmt.Printf("MIME Header: %+v\n", handler.Header)
+
+	// Create a temporary file within our temp-images directory that follows
+	// a particular naming pattern
+	tempFile, err := ioutil.TempFile("html/audio", handler.Filename)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer tempFile.Close()
+
+	// read all of the contents of our uploaded file into a
+	// byte array
+	fileBytes, err := ioutil.ReadAll(file)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	/*detectedFileType := http.DetectContentType(fileBytes)
+	switch detectedFileType {
+	case "audio/mpeg":
+	case "audio/wav":
+		break
+	default:
+		renderError(w, "INVALID_FILE_TYPE\nGo back and use a *.mp3 or *.wav file.", http.StatusBadRequest)
+		return
+	}*/
+
+	// write this byte array to our temporary file
+	tempFile.Write(fileBytes)
+	// return that we have successfully uploaded our file!
+	fmt.Fprintf(w, "Successfully Uploaded File\n")
+	fmt.Fprintf(w, "Navigate back\n")
+
+	WriteJsPlaylist(JsPlaylistPath)
+	WriteM3UPlaylist(M3uPlaylistPath, Ip, HostPort)
+	fmt.Println("Update M3U and JS Playlist\n")
+}
+
+func ServeFiles(w http.ResponseWriter, r *http.Request) {
+	p := "." + r.URL.Path
+	if p == "./" {
+		p = "./html/index.html"
+	}
+
+	http.ServeFile(w, r, p)
+}
+
+var (
+	// Global path vars
+	Ip              string
+	HostPort        string = ":8080"
+	JsPlaylistPath  string = "/html/js/jsPlaylist.js"
+	M3uPlaylistPath string = "/html/M3U/playlist.m3u"
+)
 
 // Main()
 func main() {
-    var (
-        Ip               string
-        HostPort         string = ":8080"
-        JsPlaylistPath   string = "/html/js/jsPlaylist.js"
-        M3uPlaylistPath  string = "/html/M3U/playlist.m3u"
-    )
 
-    // Get working directory path
-    WorkingDirectory, err := os.Getwd()
+	// Get working directory path
+	WorkingDirectory, err := os.Getwd()
 
-    if err != nil {
-        panic(err)
-    }
+	if err != nil {
+		panic(err)
+	}
 
-    Ip = GetLocalIP()
-    JsPlaylistPath = WorkingDirectory + JsPlaylistPath
-    M3uPlaylistPath = WorkingDirectory + M3uPlaylistPath
+	Ip = GetLocalIP()
+	JsPlaylistPath = WorkingDirectory + JsPlaylistPath
+	M3uPlaylistPath = WorkingDirectory + M3uPlaylistPath
 
-    // Display a TTY prompt message regarding file server usage
-    TtyGreeter(WorkingDirectory, Ip, HostPort)
+	// Display a TTY prompt message regarding file server usage
+	TtyGreeter(WorkingDirectory, Ip, HostPort)
 
-    // Array of files in the audio directory
-    PopulateFilesArray()
+	// Array of files in the audio directory
+	PopulateFilesArray()
 
-    fmt.Println("\n Generating:", JsPlaylistPath)
-    // Write a js script to dynamically add track to the html audio ol list
-    WriteJsPlaylist(JsPlaylistPath)
+	fmt.Println("\n Generating:", JsPlaylistPath)
+	// Write a js script to dynamically add track to the html audio ol list
+	WriteJsPlaylist(JsPlaylistPath)
 
-    fmt.Println("\n Generating:", M3uPlaylistPath)
-    // Generate a standalone W3M streaming audio player file
-    WriteM3UPlaylist(M3uPlaylistPath, Ip, HostPort)
+	fmt.Println("\n Generating:", M3uPlaylistPath)
+	// Generate a standalone W3M streaming audio player file
+	WriteM3UPlaylist(M3uPlaylistPath, Ip, HostPort)
 
-    fmt.Println(" ---\n ( Pres \"Ctrl+c\" to terminate server )\n")
+	fmt.Println(" ---\n ( Pres \"Ctrl+c\" to terminate server )\n")
 
-    // File Server
-    fs := http.FileServer(http.Dir("./html"))
+	http.HandleFunc("/html/audio", UploadFile)
+	http.HandleFunc("/", ServeFiles)
 
-    // Host streaming audio service
-    log.Fatal(http.ListenAndServe(HostPort, fs))
+	// File Server
+	//fs := http.FileServer(http.Dir("html"))
+
+	// Host streaming audio service
+	//log.Fatal(http.ListenAndServe(HostPort, fs))
+	log.Fatal(http.ListenAndServe(HostPort, nil))
 }
