@@ -5,22 +5,26 @@
         <meta name="viewport" content="width=device-width; initial-scale=1; user-scalable=no" />
         <meta name="author" content="Mezcel, mezcel@hotmail.com">
         <meta name="description" content="Go Dom Audio Player"/>
-        <link rel="icon" type="image/x-icon" href="img/favicon.ico">
-        <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="html/img/favicon.ico">
+        <link rel="shortcut icon" type="image/x-icon" href="html/img/favicon.ico" />
         <title>fs-path</title>
 
-        <link rel="stylesheet" href="css/w3.css" />
-        <link rel="stylesheet" href="css/myStyles.css" />
+        <link rel="stylesheet" href="html/css/w3.css" />
+        <link rel="stylesheet" href="html/css/myStyles.css" />
 
-        <script src="js/jquery-2.2.0.js"></script>
-        <script src="js/myScript.js"> </script>
-        <script src="js/audioPlayer.js"></script> <!--  HTML5 Audio controller -->
+        <script src="html/js/jquery-2.2.0.js"></script>
+        <script src="html/js/myScript.js"> </script>
+        <script src="html/js/audioPlayer.js"></script> <!--  HTML5 Audio controller -->
     </head>
 
     <body>
 
-        <!-- Toggle day/night ◐◯ -->
-        <div onclick="ToggleDarkmode()" class="btnLightdark w3-display-topleft w3-hover-text-orange"><b title="(shift) light/dark">◐</b></div>
+        <div  class="w3-display-topleft">
+            <!-- Toggle day/night ◐◯ -->
+            <b class="btnLightdark w3-hover-text-orange" onclick="ToggleDarkmode()" title="(shift) light/dark">◐</b>
+            <!-- Toggle Upload modal ◭ -->
+            <b class="btnUpload w3-hover-text-orange" onclick="ToggleUploadDisplay()" title="(u) upload">◭</b>
+        </div>
 
         <div  class="w3-display-topright">
             <!-- Toggle about/help modal 🛈 -->
@@ -34,7 +38,7 @@
             <div onclick="TogglePlaylistDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
             <br><b>Audio Server:</b><br><code id="serverUrl">server url</code><hr>
             <ol id="playlist">
-                <li><a href="audio/f-s-path0-fx.mp3" class="w3-btn w3-round">(splash sound) 🌊</a></li>
+                <li><a href="html/audio/f-s-path0-fx.mp3" class="w3-btn w3-round">(splash sound) 🌊</a></li>
             </ol>
         </div>
 
@@ -95,20 +99,37 @@
                 </table>
 
             </p>
+            <hr>
+            <b>Git:</b> <a href="https://github.com/mezcel/fs-path.git" class="w3-hover-text-orange">https://github.com/mezcel/fs-path.git</a>
+        </div>
+
+        <!-- Upload Modal -->
+        <div id="uploadModal" class="w3-sidebar w3-bar-block w3-padding-small" style="display:none">
+            <div onclick="ToggleUploadDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
+            <!-- about -->
+            <h4>Upload:</h4>
+            Upload individual audio files into the audio audio server playlist.
             <p>
                 <b>Upload tracks:</b>
-                <table class="w3-table w3-border">
-                    <tr>
-                        <th>task</th>
-                        <th>steps</th>
-                    </tr>
-                    <tr>
-                        <td>SSH Upload</td>
-                        <td><code><b>scp</b> <u>myAudioFile.mp3</u> <b>mezcel@<span id="urlIp">127.0.0.1</span></b>:<u>~/github/mezcel/fs-path.git/audio/</u> </code></td>
-                    </tr>
-                </table>
+                <div class="w3-container w3-card">
+                    <br>
+                    <form id="myForm" class="w3-border" enctype="multipart/form-data" action="http://localhost:8080/html/audio" method="post">
+                        <input type="file" name="myFile" />
+                        <input type="submit" value="upload" />
+                    </form>
+                    <table class="w3-table w3-border">
+                        <tr>
+                            <th>task</th>
+                            <th>steps</th>
+                        </tr>
+                        <tr>
+                            <td>SSH Upload</td>
+                            <td><code><b>scp</b> <u>myAudioFile.mp3</u> <b>mezcel@<span id="urlIp">127.0.0.1</span></b>:<u>~/github/mezcel/fs-path.git/audio/</u> </code></td>
+                        </tr>
+                    </table>
+                    <br>
+                </div>
             </p>
-            <hr>
             <b>Git:</b> <a href="https://github.com/mezcel/fs-path.git" class="w3-hover-text-orange">https://github.com/mezcel/fs-path.git</a>
         </div>
 
@@ -123,6 +144,6 @@
         </div>
 
         <!--  JS playlist -->
-        <script src="js/jsPlaylist.js"></script>
+        <script src="html/js/jsPlaylist.js"></script>
     </body>
 </html>

@@ -23,19 +23,19 @@ function NextTrack() {
 function DisplayCurrentTrackName( objectHTMLAudioElement ) {
     // file path
     var linkUrl = objectHTMLAudioElement.src;
-    var dirUrl = linkUrl.split("/audio");
+    var dirUrl = linkUrl.split("html/audio");
     var urlIp = linkUrl.split(":");
         urlIp = urlIp[1];
         urlIp = urlIp.split("//");
         urlIp = urlIp[1];
 
-    var audioUrl = dirUrl[0] + "/audio";
+    var audioUrl = dirUrl[0] + "html/audio";
 
     $("#urlIp").text(urlIp);
 
     $("#serverUrl").text(audioUrl);
 
-    var streamUrl = dirUrl[0] + "/M3U/playlist.m3u"
+    var streamUrl = dirUrl[0] + "html/M3U/playlist.m3u"
     $("#m3uUrl").text(streamUrl);
     $(".m3uUrl").attr("href", streamUrl);
 

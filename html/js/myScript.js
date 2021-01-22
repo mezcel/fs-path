@@ -37,10 +37,16 @@ function ToggleAudio() {
 function TogglePlaylistDisplay() {
     var x = document.getElementById("playlistModal");
     var y = document.getElementById("aboutModal");
+    var z = document.getElementById("uploadModal");
 
     // hide about modal
     if (y.style.display === "block") {
         y.style.display = "none";
+    }
+
+    // hide upload modal
+    if (z.style.display === "block") {
+        z.style.display = "none";
     }
 
     // view playlist modal
@@ -56,10 +62,16 @@ function TogglePlaylistDisplay() {
 function ToggleAboutDisplay() {
     var x = document.getElementById("aboutModal");
     var y = document.getElementById("playlistModal");
+    var z = document.getElementById("uploadModal");
 
     // hide playlist modal
     if (y.style.display === "block") {
         y.style.display = "none";
+    }
+
+    // hide upload modal
+    if (z.style.display === "block") {
+        z.style.display = "none";
     }
 
     // view about modal
@@ -91,9 +103,47 @@ function ToggleDarkmode() {
     modalContent2.classList.toggle("dark-mode");
 }
 
+function FormArctionUrl(homeUrl) {
+    document.getElementById("myForm").action = homeUrl + "html/audio";
+}
+
+function NavigateHome(homeUrl) {
+    document.getElementById("myForm").action = homeUrl;
+}
+
+/* Toggle upload modal */
+function ToggleUploadDisplay() {
+    var x = document.getElementById("playlistModal");
+    var y = document.getElementById("aboutModal");
+    var z = document.getElementById("uploadModal");
+
+    // hide playlist modal
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    }
+
+    // hide about modal
+    if (y.style.display === "block") {
+        y.style.display = "none";
+    }
+
+    // view upload modal
+    if (z.style.display === "none") {
+        var homeUrl = window.location.href;
+        FormArctionUrl(homeUrl);
+
+        z.style.display = "block";
+
+    } else {
+        z.style.display = "none";
+    }
+
+}
+
 function HideModals() {
     var x = document.getElementById("aboutModal");
     var y = document.getElementById("playlistModal");
+    var z = document.getElementById("uploadModal");
 
     if (x.style.display === "block") {
         x.style.display = "none";
@@ -101,6 +151,10 @@ function HideModals() {
 
     if (y.style.display === "block") {
         y.style.display = "none";
+    }
+
+    if (z.style.display === "block") {
+        z.style.display = "none";
     }
 }
 
@@ -141,6 +195,10 @@ document.onkeyup = function(e) {
             ToggleAboutDisplay();
             break;
 
+        case 85: // u
+            // toggle upload
+            ToggleUploadDisplay();
+            break;
         default:
             console.log("keyPress:",keyPress);
     }

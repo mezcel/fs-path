@@ -37,6 +37,13 @@
 }
 .btnLightdark:hover { cursor: context-menu; }
 
+.btnUpload {
+    font-size: 20px;
+    padding-left: 12px;
+    padding-top: 2px;
+}
+.btnUpload:hover { cursor: context-menu; }
+
 .btnInfo {
     font-size: 20px;
     padding-left: 12px;
