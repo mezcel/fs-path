@@ -24,112 +24,106 @@
             <!-- Toggle day/night ◐◯ -->
             <b class="btnLightdark w3-hover-text-orange" onclick="ToggleDarkmode()" title="(shift) light/dark">◐</b>
             <!-- Toggle Upload modal ◭ -->
-            <b class="btnUpload w3-hover-text-orange" onclick="ToggleUploadDisplay()" title="(u) upload">◭</b>
+            <b class="btnUpload w3-hover-text-khaki" onclick="ToggleUploadDisplay()" title="(u) upload">◭</b>
         </div>
 
         <div  class="w3-display-topright">
             <!-- Toggle about/help modal 🛈 -->
-            <b class="btnInfo w3-hover-text-orange" onclick="ToggleAboutDisplay()" title="(i) info">🛈</b>
-            <!-- Toggle playlist modal -->
-            <b class="btnPlaylist w3-hover-text-orange" onclick="TogglePlaylistDisplay()" title="(spacebar) playlist">☰</b>
+            <b class="btnInfo w3-hover-text-blue" onclick="ToggleAboutDisplay()" title="(i) info">🛈</b>
+            <!-- Toggle playlist modal ☰ -->
+            <b class="btnPlaylist w3-hover-text-light-green" onclick="TogglePlaylistDisplay()" title="(spacebar) playlist">☰</b>
         </div>
 
         <!-- Playlist Modal -->
-        <div id="playlistModal" class="w3-sidebar w3-bar-block w3-padding-small" style="display:none">
+        <div id="playlistModal" class="w3-sidebar w3-padding-small" style="display:none">
             <div onclick="TogglePlaylistDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
-            <br><b>Audio Server:</b><br><code id="serverUrl">server url</code><hr>
+            <br><b>Audio Server:</b> <u><code id="serverUrl">server url</code></u><hr>
             <ol id="playlist">
                 <li><a href="html/audio/f-s-path0-fx.mp3" class="w3-btn w3-round">(splash sound) 🌊</a></li>
             </ol>
         </div>
 
         <!-- About Modal -->
-        <div id="aboutModal" class="w3-sidebar w3-bar-block w3-padding-small" style="display:none">
+        <div id="aboutModal" class="w3-sidebar w3-padding-small" style="display:none">
             <div onclick="ToggleAboutDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
+
             <!-- about -->
             <h4>About:</h4>
+            A Golang <b>file server</b> which hosts <b>streaming audio</b> files.
+            <p>
             <div class="w3-card w3-padding">
-                A Golang <b>file server</b> which hosts <b>streaming audio</b> files.
-                <ul>
-                    <li>HTML5 Audio</li>
-                    <li>Streaming media media player <a class="m3uUrl w3-hover-text-orange">M3U</a> file.</li>
-                </ul>
-            </div>
-
-            <h4>Controls:</h4>
-            <p class="w3-padding">
-                <table class="w3-table w3-border">
+                <h5>Controls:</h5>
+                <table class="w3-table w3-bordered">
                     <tr>
                         <th>key</th>
                         <th>function</th>
                     </tr>
                     <tr>
-                        <td>esc</td>
+                        <td>"esc"</td>
                         <td>default home display</td>
                     </tr>
                     <tr>
-                        <td>shift</td>
+                        <td>"shift"</td>
                         <td>toggle light/dark mode</td>
                     </tr>
                     <tr>
-                        <td>spacebar</td>
+                        <td>"spacebar"</td>
                         <td>toggle playlist display</td>
                     </tr>
                     <tr>
-                        <td>p</td>
+                        <td>"p"</td>
                         <td>toggle pause/play display</td>
                     </tr>
                     <tr>
-                        <td>i</td>
+                        <td>"i"</td>
                         <td>toggle about/help display</td>
                     </tr>
                     <tr>
-                        <td>u</td>
-                        <td>Toggle upload modal</td>
+                        <td>"u"</td>
+                        <td>toggle upload modal</td>
                     </tr>
                 </table>
+            </div>
             </p>
-            <p class="w3-card w3-padding">
+
+            <p>
                 <b>Streaming Radio:</b>
-                Use the following url in a streaming medial player. <a id="m3uUrl" class="m3uUrl w3-hover-text-orange">M3U Url</a>
+                Streaming media player playlist. <a id="m3uUrl" class="m3uUrl w3-hover-text-orange">M3U Url</a>
             </p>
-            <hr>
             <b>Git:</b> <a href="https://github.com/mezcel/fs-path.git" class="w3-hover-text-orange">https://github.com/mezcel/fs-path.git</a>
         </div>
 
         <!-- Upload Modal -->
-        <div id="uploadModal" class="w3-sidebar w3-bar-block w3-padding-small" style="display:none">
+        <div id="uploadModal" class="w3-sidebar w3-padding-small" style="display:none">
             <div onclick="ToggleUploadDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
-            <!-- about -->
+
             <h4>Upload Tracks:</h4>
             Upload individual audio files into the audio audio server playlist.
             <p>
-                <div class="w3-container w3-card">
+                <div class="w3-container w3-padding w3-card">
                     <h5>GUI Upload:</h5>
                     <div class="w3-border w3-container" >
-                        <br>
+                        <p>Expect a momentary delay upon upload.</p>
                         <form id="myForm" enctype="multipart/form-data" action="http://localhost:8080/html/audio" method="post">
                             <input type="file" name="myFile" />
                             <input type="submit" value="upload" />
                         </form>
-                        Expect a momentary delay upon upload.
                     </div>
-                    <h5>TTY Upload:</h5>
-                    <table class="w3-table w3-border">
-                        <tr>
-                            <th>task</th>
-                            <th>steps</th>
-                        </tr>
-                        <tr>
-                            <td>SSH Upload</td>
-                            <td><code><b>scp</b> <u>myAudioFile.mp3</u> <b>mezcel@<span id="urlIp">127.0.0.1</span></b>:<u>~/github/mezcel/fs-path.git/audio/</u> </code></td>
-                        </tr>
-                        <tr>
-                            <td>Example remote server path</td>
-                            <td><code>~/github/mezcel/fs-path.git/audio/</td>
-                        </tr>
-                    </table>
-                    <br>
+
+                    <h5>SSH Upload:</h5>
+                    <div class="w3-border w3-padding">
+                        Example:
+                        <ul>
+                            <li>
+                                <code>
+                                    <b>scp</b> <u>myAudioFile.mp3</u>
+                                    <span class="w3-hover-text-blue">
+                                        <b>mezcel@<span id="urlIp">127.0.0.1</span></b>:<u>~/github/mezcel/fs-path.git/audio/</u>
+                                    <span>
+                                </code>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </p>
             <b>Git:</b> <a href="https://github.com/mezcel/fs-path.git" class="w3-hover-text-orange">https://github.com/mezcel/fs-path.git</a>

@@ -22,11 +22,8 @@
 }
 
 .fsPathLogo {
-    /*width: 300px;*/
     font-size:32px;
     font-family:"Segoe UI",Arial,sans-serif;
-    /*font-weight:400;*/
-    /*margin:10px 0;*/
 }
 .fsPathLogo:hover { cursor: context-menu; }
 
