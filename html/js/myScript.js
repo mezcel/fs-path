@@ -108,7 +108,7 @@ function ToggleDarkmode() {
 }
 
 /* update the form's action's ip url */
-function FormArctionUrl(homeUrl) {
+function FormActionUrl(homeUrl) {
     document.getElementById("myForm").action = homeUrl + "html/audio";
 }
 
@@ -131,7 +131,7 @@ function ToggleUploadDisplay() {
     // view upload modal
     if (z.style.display === "none") {
         var homeUrl = window.location.href;
-        FormArctionUrl(homeUrl);
+        FormActionUrl(homeUrl);
 
         z.style.display = "block";
 

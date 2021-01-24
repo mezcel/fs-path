@@ -163,7 +163,7 @@ func WriteJsPlaylist(jsPlaylistPath string) {
 		return
 	}
 
-	fmt.Println("\tFile Updated Successfully.")
+	fmt.Println("\tJS File Updated Successfully.")
 }
 
 // Make an M3U playlist file
@@ -196,7 +196,7 @@ func WriteM3UPlaylist(m3uPlaylistPath string, Ip string, HostPort string) {
 		return
 	}
 
-	fmt.Println("\tFile Updated Successfully.")
+	fmt.Println("\tM3U File Updated Successfully.")
 
 }
 
@@ -256,9 +256,11 @@ func TtyGreeter(WorkingDirectory string, Ip string, HostPort string) {
 	fmt.Println("## ############################################################################")
 }
 
-// Upload client file to goserver
 func UploadFile(w http.ResponseWriter, r *http.Request) {
-	var tempFilename string
+	var (
+		tempFilename string
+		jsString     string
+	)
 
 	fmt.Println("File Upload Endpoint Hit")
 
@@ -276,9 +278,9 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer file.Close()
-	fmt.Printf("Uploaded File:\t%+v\n", handler.Filename)
-	fmt.Printf("File Size:\t\t%+v\n", handler.Size)
-	fmt.Printf("MIME Header:\t%+v\n", handler.Header)
+	fmt.Printf(" Uploaded File:\t%+v\n", handler.Filename)
+	fmt.Printf(" File Size:\t\t%+v\n", handler.Size)
+	//fmt.Printf("MIME Header:\t%+v\n", handler.Header)
 
 	// Create a temporary file within our temp-images directory that follows
 	// a particular naming pattern
@@ -301,13 +303,18 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 	tempFile.Write(fileBytes)
 
 	// return that we have successfully uploaded our file!
-	fmt.Fprintf(w, "Successfully Uploaded File\n\n")
-	fmt.Fprintf(w, "Navigate back and refresh to ensure DOM reads the server update.\n")
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	fmt.Fprintf(w, "<center><h4>Successfully uploaded file.</h4>Go back and refresh.</center>")
 
+	// Reload DOM and reset navigation to home view
+	jsString = "<script> var linkUrl = window.location.href; var dirUrl = linkUrl.split(\"html/audio\"); window.location.href = dirUrl[0]; </script> "
+	fmt.Fprintf(w, jsString)
+
+	fmt.Printf("Refreshing server track list ...")
 	PopulateFilesArray()
 	WriteJsPlaylist(fsStructs.JsPlaylistPath)
 	WriteM3UPlaylist(fsStructs.M3uPlaylistPath, fsStructs.Ip, fsStructs.HostPort)
-	fmt.Println("Update M3U and JS Playlist\n")
+	fmt.Println("Updated M3U and JS Playlist\n")
 }
 
 /* Serve local file path in goserver */
