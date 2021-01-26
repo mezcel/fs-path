@@ -13,7 +13,7 @@ function AddListItem(trackname, trackpath){
     a.textContent = trackname;
     a.setAttribute('href', trackpath);
     a.classList.add("w3-btn");
-    a.classList.add("w3-round");
+    a.classList.add("w3-round-small");
     newItem.appendChild(a);
     ulist.appendChild(newItem);
 
@@ -35,6 +35,9 @@ function ToggleAudio() {
 
 /* Toggle the display of the the playlist */
 function TogglePlaylistDisplay() {
+    var u = document.getElementById("topLeftContainer");
+    var v = document.getElementById("topRightContainer");
+    var w = document.getElementById("mainPlayer");
     var x = document.getElementById("playlistModal");
     var y = document.getElementById("aboutModal");
     var z = document.getElementById("uploadModal");
@@ -52,21 +55,30 @@ function TogglePlaylistDisplay() {
     // view playlist modal
     if (x.style.display === "none") {
         x.style.display = "block";
+        u.style.display = "none";
+        v.style.display = "none";
+        w.style.display = "none";
     } else {
         x.style.display = "none";
+        u.style.display = "block";
+        v.style.display = "block";
+        w.style.display = "block";
     }
 
 }
 
 /* Toggle the display of the the About */
 function ToggleAboutDisplay() {
-    var x = document.getElementById("aboutModal");
-    var y = document.getElementById("playlistModal");
+    var u = document.getElementById("topLeftContainer");
+    var v = document.getElementById("topRightContainer");
+    var w = document.getElementById("mainPlayer");
+    var x = document.getElementById("playlistModal");
+    var y = document.getElementById("aboutModal");
     var z = document.getElementById("uploadModal");
 
     // hide playlist modal
-    if (y.style.display === "block") {
-        y.style.display = "none";
+    if (x.style.display === "block") {
+        x.style.display = "none";
     }
 
     // hide upload modal
@@ -75,45 +87,25 @@ function ToggleAboutDisplay() {
     }
 
     // view about modal
-    if (x.style.display === "none") {
+    if (y.style.display === "none") {
         x.style.display = "block";
+        u.style.display = "none";
+        v.style.display = "none";
+        w.style.display = "none";
     } else {
-        x.style.display = "none";
+        y.style.display = "none";
+        u.style.display = "block";
+        v.style.display = "block";
+        w.style.display = "block";
     }
 
 }
 
-/* Set the next random track on the link list */
-function NextTrack() {
-    var listLength = $("#playlist li a").length - 1
-    var randomTrack = Math.floor(Math.random() * listLength);
-    var currentSong = randomTrack
-
-    return currentSong
-}
-
-/* toggle light/dark mode */
-function ToggleDarkmode() {
-    var body = document.body;
-    body.classList.toggle("dark-mode");
-
-    var modalContent1 = document.getElementById("playlistModal");
-    modalContent1.classList.toggle("dark-mode");
-
-    var modalContent2 = document.getElementById("aboutModal");
-    modalContent2.classList.toggle("dark-mode");
-
-    var modalContent3 = document.getElementById("uploadModal");
-    modalContent3.classList.toggle("dark-mode");
-}
-
-/* update the form's action's ip url */
-function FormActionUrl(homeUrl) {
-    document.getElementById("myForm").action = homeUrl + "html/audio";
-}
-
 /* Toggle upload modal */
 function ToggleUploadDisplay() {
+    var u = document.getElementById("topLeftContainer");
+    var v = document.getElementById("topRightContainer");
+    var w = document.getElementById("mainPlayer");
     var x = document.getElementById("playlistModal");
     var y = document.getElementById("aboutModal");
     var z = document.getElementById("uploadModal");
@@ -134,27 +126,65 @@ function ToggleUploadDisplay() {
         FormActionUrl(homeUrl);
 
         z.style.display = "block";
+        u.style.display = "none";
+        v.style.display = "none";
+        w.style.display = "none";
 
     } else {
         z.style.display = "none";
+        u.style.display = "block";
+        v.style.display = "block";
+        w.style.display = "block";
     }
 
 }
 
+/* Set the next random track on the link list */
+function NextTrack() {
+    var listLength = $("#playlist li a").length - 1
+    var randomTrack = Math.floor(Math.random() * listLength);
+    var currentSong = randomTrack
+
+    return currentSong
+}
+
+/* toggle light/dark mode */
+function ToggleDarkmode() {
+    var body = document.body;
+    body.classList.toggle("dark-mode");
+}
+
+/* update the form's action's ip url */
+function FormActionUrl(homeUrl) {
+    document.getElementById("myForm").action = homeUrl + "html/audio";
+}
+
 /* Hide all modals */
 function HideModals() {
-    var x = document.getElementById("aboutModal");
-    var y = document.getElementById("playlistModal");
+    var u = document.getElementById("topLeftContainer");
+    var v = document.getElementById("topRightContainer");
+    var w = document.getElementById("mainPlayer");
+    var x = document.getElementById("playlistModal");
+    var y = document.getElementById("aboutModal");
     var z = document.getElementById("uploadModal");
 
+    // show mainPlayer
+
+    u.style.display = "block";
+    v.style.display = "block";
+    w.style.display = "block";
+
+    // hide playlist
     if (x.style.display === "block") {
         x.style.display = "none";
     }
 
+    // hide about
     if (y.style.display === "block") {
         y.style.display = "none";
     }
 
+    // hide upload
     if (z.style.display === "block") {
         z.style.display = "none";
     }

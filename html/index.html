@@ -8,26 +8,27 @@
         <meta name="description" content="Go Dom Audio Player"/>
         <link rel="icon" type="image/x-icon" href="html/img/favicon.ico">
         <link rel="shortcut icon" type="image/x-icon" href="html/img/favicon.ico" />
+
         <title>fs-path</title>
 
         <link rel="stylesheet" href="html/css/w3.css" />
         <link rel="stylesheet" href="html/css/myStyles.css" />
 
-        <script src="html/js/jquery-2.2.0.js"></script>
+        <!--<script src="html/js/jquery-2.2.0.js"></script>-->
         <script src="html/js/myScript.js"> </script>
         <script src="html/js/audioPlayer.js"></script> <!--  HTML5 Audio controller -->
     </head>
 
     <body>
 
-        <div  class="w3-display-topleft">
+        <div id="topLeftContainer" class="w3-display-topleft">
             <!-- Toggle day/night ◐◯ -->
             <b class="btnLightdark w3-hover-text-orange" onclick="ToggleDarkmode()" title="(shift) light/dark">◐</b>
             <!-- Toggle Upload modal ◭ -->
             <b class="btnUpload w3-hover-text-khaki" onclick="ToggleUploadDisplay()" title="(u) upload">◭</b>
         </div>
 
-        <div  class="w3-display-topright">
+        <div id="topRightContainer" class="w3-display-topright">
             <!-- Toggle about/help modal 🛈 -->
             <b class="btnInfo w3-hover-text-blue" onclick="ToggleAboutDisplay()" title="(i) info">🛈</b>
             <!-- Toggle playlist modal ☰ -->
@@ -35,16 +36,16 @@
         </div>
 
         <!-- Playlist Modal -->
-        <div id="playlistModal" class="w3-sidebar w3-padding-small" style="display:none">
+        <div id="playlistModal" class="w3-padding-small" style="display:none">
             <div onclick="TogglePlaylistDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
             <br><b>Audio Server:</b> <u><code id="serverUrl">server url</code></u><hr>
             <ol id="playlist">
-                <li><a href="html/audio/f-s-path0-fx.mp3" class="w3-btn w3-round">(splash sound) 🌊</a></li>
+                <li><a href="html/audio/f-s-path0-fx.mp3" class="w3-btn w3-round-small">(splash sound) 🌊</a></li>
             </ol>
         </div>
 
         <!-- About Modal -->
-        <div id="aboutModal" class="w3-sidebar w3-padding-small" style="display:none">
+        <div id="aboutModal" class="w3-padding-small" style="display:none">
             <div onclick="ToggleAboutDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
 
             <!-- about -->
@@ -94,7 +95,7 @@
         </div>
 
         <!-- Upload Modal -->
-        <div id="uploadModal" class="w3-sidebar w3-padding-small" style="display:none">
+        <div id="uploadModal" class="w3-padding-small" style="display:none">
             <div onclick="ToggleUploadDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
 
             <h4>Upload Tracks:</h4>
@@ -129,8 +130,8 @@
             <b>Git:</b> <a href="https://github.com/mezcel/fs-path.git" class="w3-hover-text-orange">https://github.com/mezcel/fs-path.git</a>
         </div>
 
-        <!-- Main display with title and audio player controller -->
-        <div class="w3-display-middle">
+        <!-- Main player display with title and audio player controller -->
+        <div id="mainPlayer" class="w3-display-middle">
             <div class="w3-padding-small w3-center">
                 <div class="w3-padding-small fsPathLogo w3-hover-text-cyan" onclick="ToggleAudio()" title="(p) play/pause">fs-path.git</div>
                 <hr>

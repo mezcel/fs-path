@@ -1,19 +1,34 @@
 /* https://github.com/mezcel/fs-path/html/css/styles.js */
 
-#playlist {
-    /*display: none;*/
-    /*list-style: none;*/
-    word-wrap: break-word!important;
-}
-
 #about {
     word-wrap: break-word!important;
 }
 
-#playlist .current-song a{
+#playlist {
+    word-wrap: break-word!important;
+}
+
+.current-song a{
     /* w3css w3-blue-grey */
     color: #fff!important;background-color:#607d8b!important;
     word-wrap: break-word!important;
+}
+
+#mainPlayer {
+    display: block;
+}
+
+#topLeftContainer {
+    display: block;
+
+}
+
+#topRightContainer {
+    display: block;
+}
+
+.hide {
+    display: none;
 }
 
 .dark-mode {
@@ -62,13 +77,6 @@
     padding-top: 10px;
 }
 .btnTogglePls:hover { cursor: context-menu; }
-
-/*
-.btnToggleInfo {
-    padding-right: 10px;
-    padding-top: 10px;
-}
-.btnToggleInfo:hover { cursor: context-menu; }*/
 
 /* wrap everything */
 div, p, ul, ol, li, code { word-wrap: break-word!important; }
