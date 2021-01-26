@@ -88,7 +88,7 @@ function ToggleAboutDisplay() {
 
     // view about modal
     if (y.style.display === "none") {
-        x.style.display = "block";
+        y.style.display = "block";
         u.style.display = "none";
         v.style.display = "none";
         w.style.display = "none";
@@ -169,7 +169,6 @@ function HideModals() {
     var z = document.getElementById("uploadModal");
 
     // show mainPlayer
-
     u.style.display = "block";
     v.style.display = "block";
     w.style.display = "block";
