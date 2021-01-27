@@ -156,7 +156,7 @@ function ToggleDarkmode() {
 
 /* update the form's action's ip url */
 function FormActionUrl(homeUrl) {
-    document.getElementById("myForm").action = homeUrl + "html/audio";
+    document.getElementById("myForm").action = homeUrl + "upload";
 }
 
 /* Hide all modals */

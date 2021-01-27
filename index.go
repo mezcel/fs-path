@@ -307,7 +307,7 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "<center><h4>Successfully uploaded file.</h4>Go back and refresh.</center>")
 
 	// Reload DOM and reset navigation to home view
-	jsString = "<script> var linkUrl = window.location.href; var dirUrl = linkUrl.split(\"html/audio\"); window.location.href = dirUrl[0]; </script> "
+	jsString = "<script> var linkUrl = window.location.href; var dirUrl = linkUrl.split(\"upload\"); window.location.href = dirUrl[0]; </script> "
 	fmt.Fprintf(w, jsString)
 
 	fmt.Printf("Refreshing server track list ...")
@@ -365,7 +365,8 @@ func main() {
 
 	fmt.Println(" ---\n ( Pres \"Ctrl+c\" to terminate server )\n")
 
-	http.HandleFunc("/html/audio", UploadFile)
+	//http.HandleFunc("/html/audio", UploadFile)
+	http.HandleFunc("/upload", UploadFile)
 	http.HandleFunc("/", ServeFiles)
 
 	// File Server
