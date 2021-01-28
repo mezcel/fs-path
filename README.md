@@ -2,7 +2,18 @@
 
 ## 1.0 ABOUT
 
-Host streaming audio on a Golang file server. ( [M3U](https://wiki.videolan.org/M3U/) or Web Browser ) <img src="https://golang.org/lib/godoc/images/go-logo-blue.svg" height="16"> <img src="https://www.w3.org/html/logo/badge/html5-badge-h-css3-device-multimedia.png" height="16"> <img src="https://images.videolan.org/images/VLC-IconSmall.png" height="16">
+Host streaming audio on a Golang file server. ( [M3U](https://wiki.videolan.org/M3U/) or Web Browser ) <img src="https://golang.org/lib/godoc/images/go-logo-blue.svg" height="16">
+
+### 1.1 Web Browser Player <img src="https://www.w3.org/html/logo/badge/html5-badge-h-css3-device-multimedia.png" height="16">
+* Play network hosted audio on Edge or Firefox
+* Upload local music to the host server
+* Delete audio from the server.
+
+> No security in place. ( Deliberately ) \
+Anyone can upload/delete ```*.mp3``` or ```*.wav``` files to/from the server using a WebBrowser.
+
+### 1.2 Streaming Radio Player <img src="https://images.videolan.org/images/VLC-IconSmall.png" height="16">
+* Play audio from a streaming audio player, like VLC Player.
 
 ---
 
@@ -86,12 +97,12 @@ scp <my-local-file> mezcel@10.42.0.1:~/github/mezcel/fs-path.git/html/audio
 
 ---
 
-## 4.0 Splash Audio
+## 4.0 SPASH AUDIO
 
 * Demo audio and intro sounds were generated using the ( [Watson Text to Speech](https://text-to-speech-demo.ng.bluemix.net/?_ga=2.149277174.1746788865.1577973300-883782623.1576869895&cm_mc_uid=15278110739115689857415&cm_mc_sid_50200000=20950731577973297095&cm_mc_sid_52640000=33641591577973297117) / [IBM](https://www.ibm.com/cloud/watson-text-to-speech?p1=Search&p4=43700051010023756&p5=b&cm_mmc=Search_Google-_-1S_1S-_-WW_NA-_-%2Btext%20%2Bto%20%2Bspeech_b&cm_mmca7=71700000062156796&cm_mmca8=aud-309367918490:kwd-18391235536&cm_mmca9=EAIaIQobChMIvLr8y_rW6wIVAtvACh1XXwtwEAAYASAAEgIQFPD_BwE&cm_mmca10=412803414889&cm_mmca11=b&gclid=EAIaIQobChMIvLr8y_rW6wIVAtvACh1XXwtwEAAYASAAEgIQFPD_BwE&gclsrc=aw.ds) ).
 * Plan on adding in additional effects just for jollies and personalization. Aiming to make the transitions sound more seamless.
 
-### 4.1 Rendering Scripts
+### 4.1 RENDERING SCRIPTS (text to speech)
 
 * American English (en-US): AllisonV3 (female, enhanced dnn)
     ```xml
