@@ -5,7 +5,7 @@
 Host streaming audio on a Golang file server. ( [M3U](https://wiki.videolan.org/M3U/) or Web Browser ) <img src="https://golang.org/lib/godoc/images/go-logo-blue.svg" height="16">
 
 ### 1.1 Web Browser Player <img src="https://www.w3.org/html/logo/badge/html5-badge-h-css3-device-multimedia.png" height="16">
-* Play network hosted audio on Edge or Firefox
+* Play network hosted audio on Edge "Chromium" or Firefox
 * Upload local music to the host server
 * Delete audio from the server.
 

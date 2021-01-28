@@ -152,7 +152,7 @@ function ToggleUploadDisplay() {
     // view upload modal
     if (z.style.display === "none") {
         var homeUrl = window.location.href;
-        FormActionUrl(homeUrl);
+        FormActionUrl("uploadForm", homeUrl + "upload");
 
         z.style.display = "block";
         u.style.display = "none";
@@ -184,8 +184,8 @@ function ToggleDarkmode() {
 }
 
 /* update the form's action's ip url */
-function FormActionUrl(homeUrl) {
-    document.getElementById("myForm").action = homeUrl + "upload";
+function FormActionUrl(formName, eventUrl) {
+    document.getElementById(formName).action = eventUrl;
 }
 
 /* Hide all modals */
@@ -286,7 +286,7 @@ $(document).on('click', '.btnDelete', function(even) {
 
     if (t.style.display === "none") {
         var homeUrl = window.location.href;
-        FormActionUrl(homeUrl);
+        FormActionUrl("deleteForm", homeUrl + "delete");
 
         t.style.display = "block";
         u.style.display = "none";
@@ -295,8 +295,8 @@ $(document).on('click', '.btnDelete', function(even) {
         x.style.display = "none";
         y.style.display = "none";
         z.style.display = "none";
-
     }
+
     document.getElementById("inputDelString").value = trackText;
     console.log("trackText:", trackText);
 });
