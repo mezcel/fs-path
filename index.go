@@ -26,6 +26,7 @@ type FsStruct struct {
 	WorkingDirectory string
 	JsPlaylistPath   string
 	M3uPlaylistPath  string
+	AudioPath        string
 }
 
 /* Global variables */
@@ -63,19 +64,15 @@ func MakeTextFile(textfilePath string) {
 		}
 		defer file.Close()
 	}
-
-	//fmt.Println("\tFile Created Successfully.")
 }
 
 // Delete the JS HTML5 Audio playlist script. Used prior to writing a new playlist.
-func DeleteTextFile(textfilePath string) {
+func DeleteServerFile(textfilePath string) {
 	// delete file
 	var err = os.Remove(textfilePath)
 	if err != nil {
 		return
 	}
-
-	//fmt.Println("\tFile Deleted Successfully.")
 }
 
 // Generate JS script which will make a HTML5 Audio playlist
@@ -137,7 +134,7 @@ func WriteJsPlaylist(jsPlaylistPath string) {
 
 	var javascriptString string
 
-	DeleteTextFile(jsPlaylistPath)
+	DeleteServerFile(jsPlaylistPath)
 	MakeTextFile(jsPlaylistPath)
 
 	javascriptString = GenerateJSScript()
@@ -171,7 +168,7 @@ func WriteM3UPlaylist(m3uPlaylistPath string, Ip string, HostPort string) {
 
 	var m3uString string = GenerateM3UScript(Ip, HostPort)
 
-	DeleteTextFile(m3uPlaylistPath)
+	DeleteServerFile(m3uPlaylistPath)
 	MakeTextFile(m3uPlaylistPath)
 	//m3uString = GenerateM3UScript(Ip)
 
@@ -256,7 +253,8 @@ func TtyGreeter(WorkingDirectory string, Ip string, HostPort string) {
 	fmt.Println("## ############################################################################")
 }
 
-func UploadFile(w http.ResponseWriter, r *http.Request) {
+// Upload track from DOM to server
+func UploadTrack(w http.ResponseWriter, r *http.Request) {
 	var (
 		tempFilename string
 		jsString     string
@@ -317,6 +315,35 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Updated M3U and JS Playlist\n")
 }
 
+// Delete track from server using the DOM
+func DeleteTrack(w http.ResponseWriter, r *http.Request) {
+	var (
+		audioTrack string
+		jsString   string
+	)
+
+	fmt.Println("File Delete Endpoint Hit")
+
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "ParseForm() err: %v", err)
+		return
+	}
+
+	audioTrack = r.FormValue("delString")
+	audioTrack = fsStructs.AudioPath + audioTrack
+	DeleteServerFile(audioTrack)
+
+	// Reload DOM and reset navigation to home view
+	jsString = "<script> var linkUrl = window.location.href; var dirUrl = linkUrl.split(\"delete\"); window.location.href = dirUrl[0]; </script> "
+	fmt.Fprintf(w, jsString)
+
+	fmt.Printf("Refreshing server track list ...")
+	PopulateFilesArray()
+	WriteJsPlaylist(fsStructs.JsPlaylistPath)
+	WriteM3UPlaylist(fsStructs.M3uPlaylistPath, fsStructs.Ip, fsStructs.HostPort)
+	fmt.Println("Updated M3U and JS Playlist\n")
+}
+
 /* Serve local file path in goserver */
 func ServeFiles(w http.ResponseWriter, r *http.Request) {
 	p := "." + r.URL.Path
@@ -342,6 +369,7 @@ func InitializeServerPath() {
 	fsStructs.WorkingDirectory = WorkingDirectory
 	fsStructs.JsPlaylistPath = WorkingDirectory + "/html/js/jsPlaylist.js"
 	fsStructs.M3uPlaylistPath = WorkingDirectory + "/html/M3U/playlist.m3u"
+	fsStructs.AudioPath = WorkingDirectory + "/html/audio/"
 }
 
 // Main()
@@ -365,8 +393,9 @@ func main() {
 
 	fmt.Println(" ---\n ( Pres \"Ctrl+c\" to terminate server )\n")
 
-	//http.HandleFunc("/html/audio", UploadFile)
-	http.HandleFunc("/upload", UploadFile)
+	//http.HandleFunc("/html/audio", UploadTrack)
+	http.HandleFunc("/upload", UploadTrack)
+	http.HandleFunc("/delete", DeleteTrack)
 	http.HandleFunc("/", ServeFiles)
 
 	// File Server

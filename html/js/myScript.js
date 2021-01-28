@@ -5,16 +5,27 @@ function AddListItem(trackname, trackpath){
     var a = document.createElement('a');
     var ulist = document.getElementById('playlist');
     var newItem = document.createElement('li');
+    var button = document.createElement('button');
 
     trackname = trackname.replace(/%20/g, " ");
     //trackname = decodeURI(trackname);
     //trackname = unescape(trackname);
 
+    // Track button
     a.textContent = trackname;
     a.setAttribute('href', trackpath);
     a.classList.add("w3-btn");
     a.classList.add("w3-round-small");
+
+    // delete button
+    button.textContent = "delete";
+    button.classList.add("w3-red");
+    button.classList.add("w3-round");
+    button.classList.add("btnDelete");
+
+    // Append
     newItem.appendChild(a);
+    newItem.appendChild(button);
     ulist.appendChild(newItem);
 
     console.log(newItem.TEXT_NODE);
@@ -35,12 +46,18 @@ function ToggleAudio() {
 
 /* Toggle the display of the the playlist */
 function TogglePlaylistDisplay() {
+    var t = document.getElementById("deleteModal");
     var u = document.getElementById("topLeftContainer");
     var v = document.getElementById("topRightContainer");
     var w = document.getElementById("mainPlayer");
     var x = document.getElementById("playlistModal");
     var y = document.getElementById("aboutModal");
     var z = document.getElementById("uploadModal");
+
+    // delete track modal
+    if (t.style.display === "block") {
+        t.style.display = "none";
+    }
 
     // hide about modal
     if (y.style.display === "block") {
@@ -69,12 +86,18 @@ function TogglePlaylistDisplay() {
 
 /* Toggle the display of the the About */
 function ToggleAboutDisplay() {
+    var t = document.getElementById("deleteModal");
     var u = document.getElementById("topLeftContainer");
     var v = document.getElementById("topRightContainer");
     var w = document.getElementById("mainPlayer");
     var x = document.getElementById("playlistModal");
     var y = document.getElementById("aboutModal");
     var z = document.getElementById("uploadModal");
+
+    // delete track modal
+    if (t.style.display === "block") {
+        t.style.display = "none";
+    }
 
     // hide playlist modal
     if (x.style.display === "block") {
@@ -103,12 +126,18 @@ function ToggleAboutDisplay() {
 
 /* Toggle upload modal */
 function ToggleUploadDisplay() {
+    var t = document.getElementById("deleteModal");
     var u = document.getElementById("topLeftContainer");
     var v = document.getElementById("topRightContainer");
     var w = document.getElementById("mainPlayer");
     var x = document.getElementById("playlistModal");
     var y = document.getElementById("aboutModal");
     var z = document.getElementById("uploadModal");
+
+    // delete track modal
+    if (t.style.display === "block") {
+        t.style.display = "none";
+    }
 
     // hide playlist modal
     if (x.style.display === "block") {
@@ -161,6 +190,7 @@ function FormActionUrl(homeUrl) {
 
 /* Hide all modals */
 function HideModals() {
+    var t = document.getElementById("deleteModal");
     var u = document.getElementById("topLeftContainer");
     var v = document.getElementById("topRightContainer");
     var w = document.getElementById("mainPlayer");
@@ -172,6 +202,11 @@ function HideModals() {
     u.style.display = "block";
     v.style.display = "block";
     w.style.display = "block";
+
+    // delete track modal
+    if (t.style.display === "block") {
+        t.style.display = "none";
+    }
 
     // hide playlist
     if (x.style.display === "block") {
@@ -234,3 +269,34 @@ document.onkeyup = function(e) {
             console.log("keyPress:",keyPress);
     }
 }
+
+/* Toggle delete track modal Jquery */
+$(document).on('click', '.btnDelete', function(even) {
+    // depends on jquery prev()
+    var t = document.getElementById("deleteModal");
+    var u = document.getElementById("topLeftContainer");
+    var v = document.getElementById("topRightContainer");
+    var w = document.getElementById("mainPlayer");
+    var x = document.getElementById("playlistModal");
+    var y = document.getElementById("aboutModal");
+    var z = document.getElementById("uploadModal");
+
+    // get the element text, previous to clicked element
+    var trackText = $(this).closest('button').prev('a').text();
+
+    if (t.style.display === "none") {
+        var homeUrl = window.location.href;
+        FormActionUrl(homeUrl);
+
+        t.style.display = "block";
+        u.style.display = "none";
+        v.style.display = "none";
+        w.style.display = "none";
+        x.style.display = "none";
+        y.style.display = "none";
+        z.style.display = "none";
+
+    }
+    document.getElementById("inputDelString").value = trackText;
+    console.log("trackText:", trackText);
+});

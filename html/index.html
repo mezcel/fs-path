@@ -103,12 +103,12 @@
             Upload individual audio files into the audio audio server playlist.
             <p>
                 <div class="w3-container w3-padding w3-card">
-                    <h5>GUI Upload:</h5>
+                    <h5>GUI Upload Track:</h5>
                     <div class="w3-border w3-container" >
                         <p>Expect a momentary delay upon upload.</p>
-                        <form id="myForm" enctype="multipart/form-data" action="http://localhost:8080/upload" method="post">
-                            <input type="file" name="myFile" accept="audio/mp3, audio/wav" />
-                            <input id="btnUpload" type="submit" value="upload" />
+                        <form id="myForm" enctype="multipart/form-data" action="http://localhost:8080/upload" method="post" class="w3-container">
+                            <input type="file" name="myFile" accept="audio/mp3, audio/wav" class="w3-input w3-btn w3-border" />
+                            <input id="btnUpload" type="submit" value="upload" class="w3-btn w3-red w3-right" />
                         </form>
                     </div>
 
@@ -126,6 +126,27 @@
                             </li>
                         </ul>
                     </div>
+                </div>
+            </p>
+            <b>Git:</b> <a href="https://github.com/mezcel/fs-path.git" class="w3-hover-text-orange">https://github.com/mezcel/fs-path.git</a>
+        </div>
+
+        <!-- Delete Modal -->
+        <div id="deleteModal" class="w3-padding-small" style="display:none">
+            <div onclick="TogglePlaylistDisplay();" class="btnTogglePls w3-display-topright w3-hover-text-purple" title="(esc)">Back</div>
+
+            <h4>GUI Delete Track:</h4>
+            Delete an individual audio file from the audio audio server playlist.
+            <p>
+                <div class="w3-container w3-padding w3-card">
+                    <h5>GUI Delete:</h5>
+                    <div class="w3-border w3-container w3-padding" >
+                        <form id="myForm" action="http://localhost:8080/delete" method="post" class="w3-container">
+                            <input id="inputDelString" type="text" name="delString" class="w3-input w3-border" />
+                            <input id="btnDelete" type="submit" value="delete" class="w3-btn w3-red w3-right" />
+                        </form>
+                    </div>
+
                 </div>
             </p>
             <b>Git:</b> <a href="https://github.com/mezcel/fs-path.git" class="w3-hover-text-orange">https://github.com/mezcel/fs-path.git</a>
