@@ -2,30 +2,35 @@
 
 /* Dynamically adds a list element to the HTML5 Audio Player */
 function AddListItem(trackname, trackpath){
-    var a = document.createElement('a');
+    var aTrack = document.createElement('a');
     var ulist = document.getElementById('playlist');
     var newItem = document.createElement('li');
-    var button = document.createElement('button');
+    var buttonDelete = document.createElement('button');
 
     trackname = trackname.replace(/%20/g, " ");
     //trackname = decodeURI(trackname);
     //trackname = unescape(trackname);
 
-    // Track button
-    a.textContent = trackname;
-    a.setAttribute('href', trackpath);
-    a.classList.add("w3-btn");
-    a.classList.add("w3-round-small");
+    // Delete button
+    buttonDelete.textContent = "delete";
+    buttonDelete.classList.add("w3-red");
+    buttonDelete.classList.add("w3-hover-pale-red");
+    buttonDelete.classList.add("w3-button");
+    buttonDelete.classList.add("w3-round");
+    buttonDelete.classList.add("btnDelete");
 
-    // delete button
-    button.textContent = "delete";
-    button.classList.add("w3-red");
-    button.classList.add("w3-round");
-    button.classList.add("btnDelete");
+    // Track button
+    aTrack.textContent = trackname;
+    aTrack.setAttribute('href', trackpath);
+    aTrack.classList.add("w3-button");
+    aTrack.classList.add("w3-white");
+    aTrack.classList.add("w3-hover-blue");
+    aTrack.classList.add("w3-border");
+    aTrack.classList.add("w3-round");
 
     // Append
-    newItem.appendChild(a);
-    newItem.appendChild(button);
+    newItem.appendChild(buttonDelete);    // delete button
+    newItem.appendChild(aTrack);         // track button
     ulist.appendChild(newItem);
 
     console.log(newItem.TEXT_NODE);
@@ -272,7 +277,7 @@ document.onkeyup = function(e) {
 
 /* Toggle delete track modal Jquery */
 $(document).on('click', '.btnDelete', function(even) {
-    // depends on jquery prev()
+    // depends on jquery prev() or next()
     var t = document.getElementById("deleteModal");
     var u = document.getElementById("topLeftContainer");
     var v = document.getElementById("topRightContainer");
@@ -281,8 +286,9 @@ $(document).on('click', '.btnDelete', function(even) {
     var y = document.getElementById("aboutModal");
     var z = document.getElementById("uploadModal");
 
-    // get the element text, previous to clicked element
-    var trackText = $(this).closest('button').prev('a').text();
+    // get the element text, next to clicked element
+    //var trackText = $(this).closest('button').prev('a').text(); // left element
+    var trackText = $(this).closest('button').next('a').text(); // right element
 
     if (t.style.display === "none") {
         var homeUrl = window.location.href;

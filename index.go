@@ -165,12 +165,10 @@ func WriteJsPlaylist(jsPlaylistPath string) {
 
 // Make an M3U playlist file
 func WriteM3UPlaylist(m3uPlaylistPath string, Ip string, HostPort string) {
-
 	var m3uString string = GenerateM3UScript(Ip, HostPort)
 
 	DeleteServerFile(m3uPlaylistPath)
 	MakeTextFile(m3uPlaylistPath)
-	//m3uString = GenerateM3UScript(Ip)
 
 	// Open file using READ & WRITE permission.
 	var file, errWrite = os.OpenFile(m3uPlaylistPath, os.O_RDWR, 0644)
@@ -194,7 +192,6 @@ func WriteM3UPlaylist(m3uPlaylistPath string, Ip string, HostPort string) {
 	}
 
 	fmt.Println("\tM3U File Updated Successfully.")
-
 }
 
 // GetLocalIP returns the non loopback local IP of the host
