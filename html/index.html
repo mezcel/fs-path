@@ -37,119 +37,140 @@
 
         <!-- Playlist Modal -->
         <div id="playlistModal" class="w3-padding-small" style="display:none">
-            <div onclick="TogglePlaylistDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
-            <br><b>Audio Server:</b> <code id="serverUrl" class="w3-text-brown w3-hover-amber w3-round">server url</code> <hr>
-            <ol id="playlist">
-                <li><button class="w3-button w3-purple w3-round" disabled>delete</button><a href="html/audio/f-s-path0-fx.mp3" class="w3-button w3-border w3-round w3-white w3-hover-blue">(splash sound) 🌊</a></li>
+            <div onclick="TogglePlaylistDisplay()" class="btnToggleModal w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
+            <br><b>Audio Server:</b> <code class="serverUrl w3-text-blue-grey">server url</code> <hr>
+            <ol id="playlist" >
+                <li class="w3-bar">
+                    <button class="w3-button w3-purple w3-round w3-bar-item" style="width:20%" disabled>delete</button>
+                    <a href="html/audio/f-s-path0-fx.mp3" class="w3-button w3-border w3-round w3-white w3-hover-blue w3-bar-item" style="width:75%">(splash sound) 🌊</a>
+                </li>
             </ol>
         </div>
 
         <!-- About Modal -->
         <div id="aboutModal" class="w3-padding-small" style="display:none">
-            <div onclick="ToggleAboutDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
+            <div onclick="ToggleAboutDisplay()" class="btnToggleModal w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
 
-            <!-- about -->
             <h4>About:</h4>
-            A Golang <b>file server</b> which hosts <b>streaming audio</b> files.
-            <p>
-                <div class="w3-card w3-padding">
-                    <h5>Controls:</h5>
-                    <table class="w3-table w3-bordered">
-                        <tr>
-                            <th>key</th>
-                            <th>function</th>
-                        </tr>
-                        <tr>
-                            <td>"esc"</td>
-                            <td>default home display</td>
-                        </tr>
-                        <tr>
-                            <td>"shift"</td>
-                            <td>toggle light/dark mode</td>
-                        </tr>
-                        <tr>
-                            <td>"spacebar"</td>
-                            <td>toggle playlist display</td>
-                        </tr>
-                        <tr>
-                            <td>"p"</td>
-                            <td>toggle pause/play display</td>
-                        </tr>
-                        <tr>
-                            <td>"i"</td>
-                            <td>toggle about/help display</td>
-                        </tr>
-                        <tr>
-                            <td>"u"</td>
-                            <td>toggle upload modal</td>
-                        </tr>
-                    </table>
-                </div>
-            </p>
-
-            <p>
-                <b>Streaming Radio:</b>
-                Streaming media player playlist. <a id="m3uUrl" class="m3uUrl w3-hover-text-orange">M3U Url</a>
-            </p>
-
-            <b>Git:</b> <a href="https://github.com/mezcel/fs-path.git" class="w3-hover-text-orange">https://github.com/mezcel/fs-path.git</a>
+            <div class="w3-container">
+                <p>A Golang <b>file server</b> which hosts <b>streaming audio</b> files.</p>
+                <p>
+                    <b>Streaming Radio:</b>
+                    Streaming media player playlist. <a id="m3uUrl" class="m3uUrl w3-hover-text-orange">M3U Url</a>
+                </p>
+                <p>
+                    <b>Git:</b>
+                    <a href="https://github.com/mezcel/fs-path.git" class="w3-hover-text-orange">https://github.com/mezcel/fs-path.git</a>
+                </p>
+            </div>
+            <div class="w3-container w3-border">
+                <h5>Controls:</h5>
+                <table class="w3-table w3-bordered">
+                    <tr>
+                        <th>key</th>
+                        <th>function</th>
+                    </tr>
+                    <tr>
+                        <td>"esc"</td>
+                        <td>default home display</td>
+                    </tr>
+                    <tr>
+                        <td>"shift"</td>
+                        <td>toggle light/dark mode</td>
+                    </tr>
+                    <tr>
+                        <td>"spacebar"</td>
+                        <td>toggle playlist display</td>
+                    </tr>
+                    <tr>
+                        <td>"p"</td>
+                        <td>toggle pause/play display</td>
+                    </tr>
+                    <tr>
+                        <td>"i"</td>
+                        <td>toggle about/help display</td>
+                    </tr>
+                    <tr>
+                        <td>"u"</td>
+                        <td>toggle upload modal</td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
         <!-- Upload Modal -->
         <div id="uploadModal" class="w3-padding-small" style="display:none">
-            <div onclick="ToggleUploadDisplay()" class="btnTogglePls w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
+            <div onclick="ToggleUploadDisplay()" class="btnToggleModal w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
 
             <h4>Upload Tracks:</h4>
-            Upload individual audio files into the audio audio server playlist.
-            <p>
-                <div class="w3-container w3-padding w3-card">
-                    <h5>GUI Upload Track:</h5>
-                    <div class="w3-border w3-container" >
-                        <p>Expect a momentary delay upon upload.</p>
-                        <form id="uploadForm" enctype="multipart/form-data" action="http://localhost:8080/upload" method="post" class="w3-container">
-                            <input type="file" name="uploadFile" accept="audio/mp3, audio/wav" class="w3-input w3-btn w3-border" />
-                            <input id="btnUpload" type="submit" value="upload" class="w3-button w3-border w3-round-small w3-green w3-right" />
-                        </form>
-                    </div>
+            <div class="w3-container">
+                <p>Upload a track to the audio server playlist.</p>
+            </div>
 
-                    <h5>SSH Upload:</h5>
-                    <div class="w3-border w3-padding">
-                        Example:
-                        <ul>
-                            <li>
-                                <code>
-                                    <b>scp</b> <u>myAudioFile.mp3</u>
-                                    <span class="w3-hover-text-blue">
-                                        <b>mezcel@<span id="urlIp">127.0.0.1</span></b>:<u>~/github/mezcel/fs-path.git/audio/</u>
-                                    <span>
-                                </code>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </p>
-            <b>Git:</b> <a href="https://github.com/mezcel/fs-path.git" class="w3-hover-text-orange">https://github.com/mezcel/fs-path.git</a>
+            <div class="w3-container w3-border">
+                <h5>Browse computer for audio tracks:</h5>
+                <form id="uploadForm" enctype="multipart/form-data" action="http://localhost:8080/upload" method="post">
+                    <input type="file" name="uploadFile" accept="audio/mp3, audio/wav" class="w3-input w3-border" />
+                    <input id="btnUpload" type="submit" value="upload" class="w3-button w3-border w3-round-small w3-green w3-right" />
+                </form>
+                <p>.</p>
+            </div>
+
+            <div class="w3-container">
+                <h5>SSH upload example:</h5>
+                <code class="w3-code">
+                    <b>scp</b> <u>myAudioFile.mp3</u>
+                    <span class="w3-hover-text-blue ">
+                        <b>mezcel@<span class="urlIp">127.0.0.1</span></b>:<u>~/github/mezcel/fs-path.git/audio/</u>
+                    <span>
+                </code>
+            </div>
+
         </div>
 
         <!-- Delete Modal -->
         <div id="deleteModal" class="w3-padding-small" style="display:none">
-            <div onclick="TogglePlaylistDisplay();" class="btnTogglePls w3-display-topright w3-hover-text-purple" title="(esc)">Back</div>
+            <div onclick="TogglePlaylistDisplay();" class="btnToggleModal w3-display-topright w3-hover-text-purple" title="(esc)">Back</div>
 
-            <h4>GUI Delete Track:</h4>
-            Delete an individual audio file from the audio audio server playlist.
-            <p>
-                <div class="w3-container w3-padding w3-card">
-                    <h5>GUI Delete:</h5>
-                    <div class="w3-border w3-container w3-padding" >
-                        <form id="deleteForm" action="http://localhost:8080/delete" method="post" class="w3-container">
-                            <input id="inputDelString" type="text" name="deleteFile" class="w3-input w3-border" />
-                            <input id="btnDelete" type="submit" value="delete" class="w3-button w3-border w3-round-small w3-red w3-right" />
-                        </form>
-                    </div>
+            <h4>Delete Track:</h4>
+            <div class="w3-container">
+                <p>Delete a track from the audio server playlist.</p>
+            </div>
 
-                </div>
-            </p>
-            <b>Git:</b> <a href="https://github.com/mezcel/fs-path.git" class="w3-hover-text-orange">https://github.com/mezcel/fs-path.git</a>
+            <div class="w3-container w3-border" >
+                <h5>Confirm track deletion:</h5>
+                <form id="deleteForm" action="http://localhost:8080/delete" method="post" class="w3-container">
+                    <input id="inputDelString" type="text" name="deleteFile" class="w3-input w3-border" />
+                    <input id="btnDelete" type="submit" value="delete" class="w3-button w3-border w3-round-small w3-red w3-right" />
+                </form>
+            </div>
+
+            <div class="w3-container">
+                <h5>SSH upload example:</h5>
+                <p>
+                    <code class="w3-code">
+                        <b>ssh</b> <i>-p 22</i>
+                        <span class="w3-hover-text-blue ">
+                            <u>mezcel@<span class="urlIp">127.0.0.1</u>
+                        <span>
+                    </code>
+                </p>
+                <p>
+                    <code class="w3-code">
+                        <span class="w3-hover-text-blue ">
+                            <b>cd </b> ~/github/mezcel/fs-path.git/audio/
+                        <span>
+                    </code>
+                </p>
+                <p>
+                    <code class="w3-code">
+                        <span class="w3-hover-text-blue ">
+                            <b>rm </b> myAudioFile.mp3
+                        <span>
+                    </code>
+                </p>
+            </div>
+
         </div>
 
         <!-- Main player display with title and audio player controller -->

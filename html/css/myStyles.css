@@ -8,9 +8,10 @@
     word-wrap: break-word!important;
 }
 
-.current-song a{
+.current-song a {
     /* w3css w3-blue-grey */
-    color: #fff!important;background-color:#607d8b!important;
+    color: #fff!important;
+    background-color:#607d8b!important;
     word-wrap: break-word!important;
 }
 
@@ -72,24 +73,15 @@
 }
 .btnPlaylist:hover { cursor: context-menu; }
 
-.btnTogglePls {
+.btnToggleModal {
     padding-right: 10px;
     padding-top: 10px;
 }
-.btnTogglePls:hover { cursor: context-menu; }
+.btnToggleModal:hover { cursor: context-menu; }
 
 /* wrap everything */
 div, p, ul, ol, li, code { word-wrap: break-word!important; }
 
 /* Hide scrollbars */
 div{ overflow: hidden!important; }
-
-/* Overwrite w3css sidebar */
-.w3-sidebar{
-    height:100%;
-    width:100%;
-    /*background-color:#fff;*/
-    position:fixed!important;
-    z-index:1;overflow:auto
-}
 

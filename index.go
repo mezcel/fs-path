@@ -109,8 +109,6 @@ func GenerateM3UScript(Ip string, HostPort string) string {
 		m3uString string
 		trackName string
 		trackPath string
-
-		// fsStructs.TrackArray was a global struct var
 	)
 
 	m3uString = "#EXTM3U\n"
@@ -254,6 +252,7 @@ func TtyGreeter(WorkingDirectory string, Ip string, HostPort string) {
 func UploadTrack(w http.ResponseWriter, r *http.Request) {
 	var (
 		tempFilename string
+		htmlString   string
 		jsString     string
 	)
 
@@ -273,6 +272,7 @@ func UploadTrack(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer file.Close()
+
 	fmt.Printf(" Upload File:\t%+v\n", handler.Filename)
 	fmt.Printf(" File Size:\t\t%+v\n", handler.Size)
 	//fmt.Printf("MIME Header:\t%+v\n", handler.Header)
@@ -299,17 +299,24 @@ func UploadTrack(w http.ResponseWriter, r *http.Request) {
 
 	// return that we have successfully uploaded our file!
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	fmt.Fprintf(w, "<center><h4>Successfully uploaded file.</h4>Go back and refresh.</center>")
+
+	// Display message in DOM
+	htmlString = "<center><b>uploading ...</b></center> <p><center><code>" + handler.Filename + "</code></center></p><center>Page will refresh in a moment.</center>"
+	fmt.Fprintf(w, htmlString)
 
 	// Reload DOM and reset navigation to home view
-	jsString = "<script> var linkUrl = window.location.href; var dirUrl = linkUrl.split(\"upload\"); window.location.href = dirUrl[0]; </script> "
+	jsString = "<script> var addressbar = window.location.href; var homeUrl = addressbar.split( \"upload\" ); setTimeout( function() { window.location.href = homeUrl[0]; }, 5000 );  </script> "
 	fmt.Fprintf(w, jsString)
 
-	fmt.Printf(" Added file: ", tempFile)
-	fmt.Printf("\nRefreshing server track list ...")
+	// Print msg in terminal
+	//fmt.Printf(" Added file: ", tempFile)
+	fmt.Printf("\n\nRefreshing server track list ...")
+
+	// Read audio server contents and write audio scripts
 	PopulateFilesArray()
 	WriteJsPlaylist(fsStructs.JsPlaylistPath)
 	WriteM3UPlaylist(fsStructs.M3uPlaylistPath, fsStructs.Ip, fsStructs.HostPort)
+
 	fmt.Println("Updated M3U and JS Playlist\n")
 }
 
@@ -317,6 +324,7 @@ func UploadTrack(w http.ResponseWriter, r *http.Request) {
 func DeleteTrack(w http.ResponseWriter, r *http.Request) {
 	var (
 		audioTrack string
+		htmlString string
 		jsString   string
 	)
 
@@ -332,11 +340,18 @@ func DeleteTrack(w http.ResponseWriter, r *http.Request) {
 	DeleteServerFile(audioTrack)
 
 	// Reload DOM and reset navigation to home view
-	jsString = "<script> var linkUrl = window.location.href; var dirUrl = linkUrl.split(\"delete\"); window.location.href = dirUrl[0]; </script> "
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+
+	// Display message in DOM
+	htmlString = "<center><b>deleting ...</b></center> <p><center><code>" + audioTrack + "</code></center></p><center>Page will refresh in a moment.</center>"
+	fmt.Fprintf(w, htmlString)
+
+	// Reload DOM and reset navigation to home view
+	jsString = "<script> var addressbar = window.location.href; var homeUrl = addressbar.split( \"delete\" ); setTimeout( function() { window.location.href = homeUrl[0]; }, 5000 ); </script> "
 	fmt.Fprintf(w, jsString)
 
 	fmt.Printf(" Deleted file: ", audioTrack)
-	fmt.Printf("Refreshing server track list ...")
+	fmt.Printf("\n\nRefreshing server track list ...")
 	PopulateFilesArray()
 	WriteJsPlaylist(fsStructs.JsPlaylistPath)
 	WriteM3UPlaylist(fsStructs.M3uPlaylistPath, fsStructs.Ip, fsStructs.HostPort)
