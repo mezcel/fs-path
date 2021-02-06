@@ -12,8 +12,8 @@ function AddListItem( trackname, trackpath ){
     //trackname = unescape( trackname );
 
     // Delete button
-    button.textContent = "delete";
-    button.setAttribute( 'style', "width:20%" );
+    button.textContent = "ⓧ";
+    button.setAttribute( 'style', "width:10%" );
     button.classList.add( "w3-bar-item" );
     button.classList.add( "w3-red" );
     button.classList.add( "w3-hover-pale-red" );
@@ -25,7 +25,7 @@ function AddListItem( trackname, trackpath ){
     // Track button
     a.textContent = trackname;
     a.setAttribute( 'href', trackpath );
-    a.setAttribute( 'style', "width:75%" );
+    a.setAttribute( 'style', "width:90%" );
     a.classList.add( "w3-bar-item" );
     a.classList.add( "w3-white" );
     a.classList.add( "w3-hover-blue" );

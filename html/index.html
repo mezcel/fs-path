@@ -20,7 +20,6 @@
     </head>
 
     <body>
-
         <div id="topLeftContainer" class="w3-display-topleft">
             <!-- Toggle day/night ◐◯ -->
             <b class="btnLightdark w3-hover-text-orange" onclick="ToggleDarkmode()" title="(shift) light/dark">◐</b>
@@ -39,12 +38,15 @@
         <div id="playlistModal" class="w3-padding-small" style="display:none">
             <div onclick="TogglePlaylistDisplay()" class="btnToggleModal w3-display-topright w3-hover-text-red" title="(esc)">Close</div>
             <br><b>Audio Server:</b> <code class="serverUrl w3-text-blue-grey">server url</code> <hr>
-            <ol id="playlist" >
-                <li class="w3-bar">
-                    <button class="w3-button w3-purple w3-round w3-bar-item" style="width:20%" disabled>delete</button>
-                    <a href="html/audio/f-s-path0-fx.mp3" class="w3-button w3-border w3-round w3-white w3-hover-blue w3-bar-item" style="width:75%">(splash sound) 🌊</a>
-                </li>
-            </ol>
+            <div class="w3-container">
+                <ol id="playlist">
+                    <li class="w3-bar">
+                        <!--- ⓧ✖✕ -->
+                        <button class="w3-button w3-purple w3-round w3-bar-item" style="width:10%" disabled>ⓧ</button>
+                        <a href="html/audio/f-s-path0-fx.mp3" class="w3-button w3-border w3-round w3-white w3-hover-blue w3-bar-item" style="width:90%">(splash sound) 🌊</a>
+                    </li>
+                </ol>
+            </div>
         </div>
 
         <!-- About Modal -->
@@ -107,7 +109,7 @@
                 <p>Upload a track to the audio server playlist.</p>
             </div>
 
-            <div class="w3-container w3-border">
+            <div class="w3-container w3-border w3-card w3-round">
                 <h5>Browse computer for audio tracks:</h5>
                 <form id="uploadForm" enctype="multipart/form-data" action="http://localhost:8080/upload" method="post">
                     <input type="file" name="uploadFile" accept="audio/mp3, audio/wav" class="w3-input w3-border" />
@@ -117,8 +119,8 @@
             </div>
 
             <div class="w3-container">
-                <h5>SSH upload example:</h5>
-                <code class="w3-code">
+                <p><b>SSH upload example:</b></p>
+                $ <code>
                     <b>scp</b> <u>myAudioFile.mp3</u>
                     <span class="w3-hover-text-blue ">
                         <b>mezcel@<span class="urlIp">127.0.0.1</span></b>:<u>~/github/mezcel/fs-path.git/audio/</u>
@@ -137,7 +139,7 @@
                 <p>Delete a track from the audio server playlist.</p>
             </div>
 
-            <div class="w3-container w3-border" >
+            <div class="w3-container w3-border w3-card w3-round" >
                 <h5>Confirm track deletion:</h5>
                 <form id="deleteForm" action="http://localhost:8080/delete" method="post" class="w3-container">
                     <input id="inputDelString" type="text" name="deleteFile" class="w3-input w3-border" />
@@ -146,9 +148,9 @@
             </div>
 
             <div class="w3-container">
-                <h5>SSH upload example:</h5>
+                <p><b>SSH delete example:</b></p>
                 <p>
-                    <code class="w3-code">
+                    $ <code >
                         <b>ssh</b> <i>-p 22</i>
                         <span class="w3-hover-text-blue ">
                             <u>mezcel@<span class="urlIp">127.0.0.1</u>
@@ -156,14 +158,14 @@
                     </code>
                 </p>
                 <p>
-                    <code class="w3-code">
+                    $ <code >
                         <span class="w3-hover-text-blue ">
                             <b>cd </b> ~/github/mezcel/fs-path.git/audio/
                         <span>
                     </code>
                 </p>
                 <p>
-                    <code class="w3-code">
+                    $ <code >
                         <span class="w3-hover-text-blue ">
                             <b>rm </b> myAudioFile.mp3
                         <span>

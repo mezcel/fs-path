@@ -6,6 +6,10 @@
 
 #playlist {
     word-wrap: break-word!important;
+    /* no list bullets */
+    list-style-type: none;
+    margin:0;
+    padding: 0;
 }
 
 .current-song a {
@@ -21,7 +25,6 @@
 
 #topLeftContainer {
     display: block;
-
 }
 
 #topRightContainer {
@@ -44,21 +47,21 @@
 .fsPathLogo:hover { cursor: context-menu; }
 
 .btnLightdark {
-    font-size: 20px;
+    font-size: 32px;
     padding-left: 12px;
     padding-top: 2px;
 }
 .btnLightdark:hover { cursor: context-menu; }
 
 .btnUpload {
-    font-size: 20px;
+    font-size: 32px;
     padding-left: 12px;
     padding-top: 2px;
 }
 .btnUpload:hover { cursor: context-menu; }
 
 .btnInfo {
-    font-size: 20px;
+    font-size: 32px;
     padding-left: 12px;
     padding-right: 12px;
     padding-top: 2px;
@@ -66,7 +69,7 @@
 .btnInfo:hover { cursor: context-menu; }
 
 .btnPlaylist {
-    font-size: 20px;
+    font-size: 32px;
     padding-left: 12px;
     padding-right: 12px;
     padding-top: 2px;
