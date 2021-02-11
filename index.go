@@ -220,7 +220,7 @@ func TtyGreeter(WorkingDirectory string, Ip string, HostPort string) {
 
 	var (
 		hostUrl        string = "http://" + Ip + HostPort
-		m3uUrl         string = hostUrl + "/M3U/playlist.m3u"
+		m3uUrl         string = hostUrl + "/html/M3U/playlist.m3u"
 		audioDirectory string = WorkingDirectory + "/html/audio"
 	)
 
